@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Campus for Christ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      :root {
+        /* Text Colors */
+        --text-primary: #1a1a1a; /* Body Text */
+        --text-secondary: #333333; /* Paragraphs */
+        --text-light: #ffffff; /* On Dark Backgrounds */
+        --text-muted: #6b7280; /* Optional muted text */
+
+        /* Button Colors */
+        --btn-primary: #002a5c; /* Navy Blue */
+        --btn-primary-hover: #175e91; /* Accent Blue */
+        --btn-secondary-bg: #8cc2e6; /* Light Blue */
+        --btn-secondary-text: #002a5c; /* Navy Blue */
+        --btn-secondary-hover: #175e91; /* Darker Accent */
+        --btn-disabled: #d1d5db; /* Default Gray */
+
+        /* Background Colors */
+        --bg-main: #ffffff; /* Page background */
+        --bg-accent: #f0f6fa; /* Section BG */
+        --bg-card: #ffffff; /* Card Background */
+        --bg-header-footer: #002a5c; /* Header/Footer */
+        --bg-alt-accent: #e6f2fb; /* Optional soft blue alt background */
+
+        /* Interactive Colors */
+        --link: #175e91; /* Link */
+        --link-hover: #002a5c; /* Link Hover */
+        --form-bg: #ffffff; /* Input background */
+        --form-border: #8cc2e6; /* Input border */
+        --form-focus: #175e91; /* Input focus */
+
+        /* Status Colors */
+        --success: #4caf50; /* Alert - Success */
+        --error: #f44336; /* Alert - Error */
+        --warning: #ffc107; /* Alert - Warning */
+
+        /* Utility Colors */
+        --border: #e5e7eb; /* Border lines */
+        --divider: #f3f4f6; /* Divider lines */
+        --shadow: rgba(0, 0, 0, 0.1); /* Shadows */
+      }
+
+      /* Custom CSS classes using the variables */
+      .text-primary {
+        color: var(--text-primary);
+      }
+      .text-secondary {
+        color: var(--text-secondary);
+      }
+      .text-light {
+        color: var(--text-light);
+      }
+      .text-muted {
+        color: var(--text-muted);
+      }
+
+      .btn-primary {
+        background-color: var(--btn-primary);
+        color: var(--text-light);
+      }
+      .btn-primary:hover {
+        background-color: var(--btn-primary-hover);
+      }
+
+      .btn-secondary {
+        background-color: var(--btn-secondary-bg);
+        color: var(--btn-secondary-text);
+      }
+      .btn-secondary:hover {
+        background-color: var(--btn-secondary-hover);
+        color: var(--text-light);
+      }
+
+      .bg-main {
+        background-color: var(--bg-main);
+      }
+      .bg-accent {
+        background-color: var(--bg-accent);
+      }
+      .bg-card {
+        background-color: var(--bg-card);
+      }
+      .bg-header-footer {
+        background-color: var(--bg-header-footer);
+      }
+      .bg-alt-accent {
+        background-color: var(--bg-alt-accent);
+      }
+
+      .link-color {
+        color: var(--link);
+      }
+      .link-color:hover {
+        color: var(--link-hover);
+      }
+
+      .border-custom {
+        border-color: var(--border);
+      }
+      .shadow-custom {
+        box-shadow: 0 4px 6px var(--shadow);
+      }
+
+      /* Header overlay gradient using custom colors */
+      .header-overlay {
+        background: linear-gradient(
+          135deg,
+          var(--btn-primary) 100%,
+          var(--btn-primary-hover) 50%,
+          var(--link) 100%
+        );
+        opacity: 0.8;
+      }
+
+      /* Style for the devotional background image */
+      .devotional-image-bg {
+        background: url("m-7.jpg") center/cover;
+      }
+    </style>
+  </head>
+  <body class="bg-accent">
+    <nav class="bg-main border-b border-custom relative z-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-12">
+          <div class="flex justify-center items-center space-x-8 flex-1">
+            <a
+              href="#"
+              class="link-color hover:text-muted text-xs font-semibold transition-colors"
+            >
+              WHAT WE BELIEVE
+            </a>
+            <div class="border-r-[1.5px] border-custom h-7"></div>
+
+            <a
+              href="#"
+              class="link-color hover:text-muted text-xs font-semibold transition-colors"
+            >
+              JESUS
+            </a>
+
+            <a
+              href="#"
+              class="link-color hover:text-muted text-xs font-semibold transition-colors"
+            >
+              OUR PURPOSE
+            </a>
+            <a
+              href="#"
+              class="link-color hover:text-muted text-xs font-semibold transition-colors"
+            >
+              CONFERENCE
+            </a>
+            <a
+              href="#"
+              class="link-color hover:text-muted text-xs font-semibold transition-colors"
+            >
+              IFES HISTORY
+            </a>
+            <a
+              href="#"
+              class="link-color hover:text-muted text-xs font-semibold transition-colors"
+            >
+              FIND A CHURCH
+            </a>
+          </div>
+
+          <div class="flex items-center">
+            <select
+              class="text-muted text-sm font-medium bg-transparent border-none focus:outline-none cursor-pointer"
+            >
+              <option>EN</option>
+              <option>FR</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <nav class="bg-main shadow-custom py-2.4 relative z-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+          <div class="flex items-center">
+            <div class="flex-shrink-0 flex items-center">
+              <div
+                class="w-[120px] h-10 rounded-md border-custom flex items-center justify-center mr-3"
+              >
+                <span class="text-primary font-bold text-lg italic">
+                  <img src="logo-r.png" alt="Logo" />
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hidden md:block">
+            <div class="ml-10 h-10 flex items-baseline space-x-8">
+              <a
+                href="#"
+                class="text-primary link-color font-bold text-sm tracking-wide transition-colors"
+              >
+                ABOUT US
+              </a>
+              <a
+                href="#"
+                class="text-primary link-color font-bold text-sm tracking-wide transition-colors"
+              >
+                OUR MINISTRY
+              </a>
+              <a
+                href="#"
+                class="text-primary link-color font-bold text-sm tracking-wide transition-colors"
+              >
+                GET INVOLVED
+              </a>
+              <a
+                href="#"
+                class="text-primary link-color font-bold text-sm tracking-wide transition-colors"
+              >
+                BLOG
+              </a>
+              <a
+                href="#"
+                class="text-primary link-color font-bold text-sm tracking-wide transition-colors"
+              >
+                LIBRARY
+              </a>
+            </div>
+          </div>
+
+          <div class="flex items-center space-x-4">
+            <button
+              class="flex items-center text-primary link-color font-bold text-sm transition-colors"
+            >
+              <svg
+                class="w-4 h-4 mr-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                ></path>
+              </svg>
+              Login
+            </button>
+            <a
+              href="#"
+              class="text-primary link-color font-bold text-sm transition-colors"
+            >
+              Handbook
+            </a>
+            <button
+              class="btn-primary px-6 py-2 rounded-md font-medium text-sm transition-all duration-300 flex items-center shadow-custom"
+            >
+              Donate
+              <svg
+                class="w-4 h-4 ml-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5l7 7-7 7"
+                ></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="relative h-[500px] overflow-hidden">
+      <div
+        class="absolute inset-0 bg-cover bg-center bg-no-repeat transform transition-transform duration-1000 hover:scale-105"
+        style="background-image: url('g-1.jpg')"
+      ></div>
+
+      <div class="absolute inset-0 header-overlay"></div>
+
+      <div
+        class="relative z-10 h-full flex items-center justify-center text-center px-4"
+      >
+        <div class="max-w-4xl mx-auto">
+          <h1
+            class="text-2xl md:text-4xl lg:text-5xl font-bold text-light mb-4 leading-tight"
+          >
+            Campus for
+            <span
+              class="block bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent"
+            >
+              Christ
+            </span>
+          </h1>
+          <p
+            class="text-sm md:text-base text-light mb-6 leading-relaxed max-w-xl mx-auto opacity-90"
+          >
+            To see every student and graduate as an agent of Godly
+            transformation in church and society
+          </p>
+          <div class="flex flex-col sm:flex-row gap-3 justify-center">
+            <button
+              class="bg-main text-primary px-5 py-2.5 rounded font-medium text-sm hover:bg-alt-accent transition-all duration-300 shadow-custom"
+            >
+              Join Community
+            </button>
+            <button
+              class="btn-secondary px-5 py-2.5 rounded font-medium text-sm transition-all duration-300 shadow-custom"
+            >
+              Learn About Us
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="absolute top-20 left-10 w-20 h-20 border border-white/20 rounded-md animate-pulse"
+      ></div>
+      <div
+        class="absolute bottom-20 right-10 w-16 h-16 border border-white/20 rounded-md animate-pulse"
+        style="animation-delay: 1s"
+      ></div>
+      <div
+        class="absolute top-1/2 left-20 w-12 h-12 border border-white/20 rounded-md animate-pulse"
+        style="animation-delay: 0.5s"
+      ></div>
+    </div>
+    <!-- // who i am -->
+    <div class="bg-main py-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-2">
+          <h2
+            class="text-5xl md:text-6xl font-light mb-12 tracking-wide"
+            style="color: var(--link)"
+          >
+            I am a...
+          </h2>
+
+          <div class="flex flex-wrap justify-center gap-3 sm:gap-4 mb-20">
+            <button
+              class="btn-secondary px-8 py-2.5 rounded-md font-semibold text-sm md:text-base transition-all duration-300 transform hover:scale-105 shadow-custom"
+            >
+              STUDENT
+            </button>
+            <button
+              class="btn-primary px-8 py-2.5 rounded-md font-semibold text-sm md:text-base transition-all duration-300 transform hover:scale-105 shadow-custom"
+            >
+              DONOR
+            </button>
+            <button
+              class="btn-primary px-8 py-2.5 rounded-md font-semibold text-sm md:text-base transition-all duration-300 transform hover:scale-105 shadow-custom"
+            >
+              PARENT
+            </button>
+            <button
+              class="btn-primary px-8 py-2.5 rounded-md font-semibold text-sm md:text-base transition-all duration-300 transform hover:scale-105 shadow-custom"
+            >
+              PASTOR
+            </button>
+            <button
+              class="btn-primary px-8 py-2.5 rounded-md font-semibent text-sm md:text-base transition-all duration-300 transform hover:scale-105 shadow-custom"
+            >
+              ALUMNI
+            </button>
+          </div>
+
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12"
+          >
+            <div
+              class="bg-card rounded-2xl p-10 shadow-custom hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-custom"
+            >
+              <div class="mb-8">
+                <div
+                  class="w-16 h-16 bg-alt-accent rounded-md flex items-center justify-center mx-auto mb-6"
+                >
+                  <svg
+                    class="w-8 h-8"
+                    style="color: var(--link)"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                    ></path>
+                  </svg>
+                </div>
+                <h3
+                  class="text-2xl font-bold mb-6 leading-tight"
+                  style="color: var(--link)"
+                >
+                  Join an InterVarsity community
+                </h3>
+              </div>
+              <div class="text-left">
+                <h4 class="font-bold text-primary mb-4 text-lg">Sign up now</h4>
+                <p class="text-secondary leading-relaxed text-base">
+                  Find your place to belong and grow your faith in college. Join
+                  an InterVarsity community on your campus now!
+                </p>
+              </div>
+            </div>
+
+            <div
+              class="bg-card rounded-2xl p-10 shadow-custom hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-custom"
+            >
+              <div class="mb-8">
+                <div
+                  class="w-16 h-16 bg-alt-accent rounded-md flex items-center justify-center mx-auto mb-6"
+                >
+                  <svg
+                    class="w-8 h-8"
+                    style="color: var(--link)"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"
+                    ></path>
+                  </svg>
+                </div>
+                <h3
+                  class="text-2xl font-bold mb-6 leading-tight"
+                  style="color: var(--link)"
+                >
+                  Start something new on campus
+                </h3>
+              </div>
+              <div class="text-left">
+                <h4 class="font-bold text-primary mb-4 text-lg">
+                  Start something new
+                </h4>
+                <p class="text-secondary leading-relaxed text-base">
+                  Learn how to reach your campus, a corner of campus, or an
+                  unreached campus near you with the hope of Jesus.
+                </p>
+              </div>
+            </div>
+
+            <div
+              class="bg-card rounded-2xl p-10 shadow-custom hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-custom md:col-span-2 lg:col-span-1"
+            >
+              <div class="mb-8">
+                <div
+                  class="w-16 h-16 bg-alt-accent rounded-md flex items-center justify-center mx-auto mb-6"
+                >
+                  <svg
+                    class="w-8 h-8"
+                    style="color: var(--link)"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                    ></path>
+                  </svg>
+                </div>
+                <h3
+                  class="text-2xl font-bold mb-6 leading-tight"
+                  style="color: var(--link)"
+                >
+                  Grow in your faith
+                </h3>
+              </div>
+              <div class="text-left">
+                <h4 class="font-bold text-primary mb-4 text-lg">
+                  Spiritual formation resources
+                </h4>
+                <p class="text-secondary leading-relaxed text-base">
+                  Explore resources that will strengthen your faith in college.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- about section -->
+    <section class="bg-main py-20">
+      <div class="max-w-full mx-auto">
+        <div
+          class="flex flex-col lg:flex-row min-h-[350px] w-full shadow-custom border border-custom rounded-lg overflow-hidden"
+        >
+          <div
+            class="flex-1 devotional-image-bg min-h-[250px] lg:min-h-[350px] w-full"
+          ></div>
+
+          <div
+            class="flex-1 bg-card px-8 py-12 lg:px-16 lg:py-16 flex flex-col justify-center"
+          >
+            <div
+              class="text-sm font-bold tracking-wider uppercase text-muted mb-4"
+            >
+              ABOUT US
+            </div>
+
+            <h2
+              class="text-primary text-3xl lg:text-4xl font-bold leading-tight mb-6"
+            >
+              Helping shape lives on campus for over years
+            </h2>
+
+            <div
+              class="w-full h-px mb-6"
+              style="background-color: var(--border)"
+            ></div>
+
+            <p class="text-secondary text-base leading-relaxed mb-10">
+              Enhance each day with verses from the Bible, reflections from
+              Enhance Enhance, and prayer. You will Enhance find the strength,
+              peace, and comfort you need to strengthen your walk with Christ.
+            </p>
+
+            <button
+              class="btn-primary px-7 py-3 text-sm font-bold uppercase tracking-wider rounded-md cursor-pointer transition-colors duration-300 ease-in-out self-start"
+            >
+              SUBSCRIBE
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

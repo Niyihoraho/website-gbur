@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Billy Graham Daily Devotional</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              "text-primary": "#1a1a1a",
+              "text-secondary": "#333333",
+              "text-light": "#ffffff",
+              "text-muted": "#6b7280",
+              "btn-primary": "#002a5c",
+              "btn-primary-hover": "#175e91",
+              "btn-secondary-bg": "#8cc2e6",
+              "btn-secondary-text": "#002a5c",
+              "btn-secondary-hover": "#175e91",
+              "btn-disabled": "#d1d5db",
+              "bg-main": "#ffffff",
+              "bg-accent": "#f0f6fa",
+              "bg-card": "#ffffff",
+              "bg-header-footer": "#002a5c",
+              "bg-alt-accent": "#e6f2fb",
+              link: "#175e91",
+              "link-hover": "#002a5c",
+              "form-bg": "#ffffff",
+              "form-border": "#8cc2e6",
+              "form-focus": "#175e91",
+              success: "#4caf50",
+              error: "#f44336",
+              warning: "#ffc107",
+              // Using a standard Tailwind color for the border/divider for simplicity
+              border: "#e5e7eb", // gray-200
+              divider: "#e5e7eb", // gray-200
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .devotional-image-bg {
+        /* I've used a placeholder of Billy Graham. Replace this with your 'm-7.jpg' file */
+        background: url("m-7.jpg") center/cover;
+      }
+    </style>
+  </head>
+  <body class="bg-bg-main text-text-primary">
+    <div
+      class="flex flex-col lg:flex-row min-h-[500px] w-full max-w-6xl mx-auto"
+    >
+      <div class="flex-1 devotional-image-bg min-h-[300px] lg:min-h-full"></div>
+
+      <div
+        class="flex-1 bg-bg-card px-8 py-12 lg:px-16 lg:py-16 flex flex-col justify-center lg:border-l border-divider"
+      >
+        <div
+          class="text-xs font-bold tracking-wider uppercase text-text-muted mb-4"
+        >
+          DEVOTIONAL
+        </div>
+
+        <h2
+          class="text-3xl lg:text-4xl font-bold leading-tight text-text-primary mb-6"
+        >
+          Get Billy Graham's Daily Devotion in Your Inbox
+        </h2>
+
+        <div class="w-full h-px bg-divider mb-6"></div>
+
+        <p class="text-base leading-relaxed text-text-secondary mb-10">
+          Enhance each day with verses from the Bible, reflections from Billy
+          Graham, and prayer. You will find the strength, peace, and comfort you
+          need to strengthen your walk with Christ.
+        </p>
+
+        <button
+          class="bg-btn-primary text-text-light border-none px-7 py-3 text-sm font-bold uppercase tracking-wider rounded-md cursor-pointer transition-colors duration-300 ease-in-out self-start hover:bg-btn-primary-hover"
+        >
+          SUBSCRIBE
+        </button>
+      </div>
+    </div>
+  </body>
+</html>

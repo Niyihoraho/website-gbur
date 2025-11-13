@@ -1,26 +1,707 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* === PRIMARY BRAND COLORS (From Logo) === */
+  --brand-primary: #002a5c; /* Navy Blue - Main brand color from logo */
+  --brand-primary-light: #003d7a; /* Lighter navy for hover states */
+  --brand-primary-dark: #001d3d; /* Darker navy for active states */
+  
+  --brand-secondary: #175e91; /* Sky Blue - Secondary from logo globe */
+  --brand-secondary-light: #2980b9; /* Lighter blue for hover */
+  --brand-secondary-dark: #0f4a6f; /* Darker blue for active */
+  
+  --brand-accent: #8cc2e6; /* Light Blue - From logo highlights */
+  --brand-accent-light: #a8d4f0; /* Lighter accent */
+  --brand-accent-dark: #6ba9d0; /* Darker accent */
+  
+  --brand-action: #2980b9; /* Action color - bright blue for CTAs */
+  --brand-action-light: #3498db; /* Lighter action blue for hover */
+  --brand-action-dark: #1f6fa1; /* Darker action blue for active */
+
+  /* === NEUTRAL COLORS === */
+  --neutral-50: #fafafa;
+  --neutral-100: #f5f5f5;
+  --neutral-200: #e5e5e5;
+  --neutral-300: #d4d4d4;
+  --neutral-400: #a3a3a3;
+  --neutral-500: #737373;
+  --neutral-600: #525252;
+  --neutral-700: #404040;
+  --neutral-800: #262626;
+  --neutral-900: #171717;
+
+  /* === TEXT COLORS === */
+  --text-primary: var(--neutral-900); /* Main text */
+  --text-secondary: var(--neutral-700); /* Secondary text */
+  --text-tertiary: var(--neutral-600); /* Tertiary text */
+  --text-muted: var(--neutral-500); /* Muted/disabled text */
+  --text-light: #ffffff; /* Text on dark backgrounds */
+  --text-inverse: var(--brand-primary); /* Inverse text color */
+
+  /* === BACKGROUND COLORS === */
+  --bg-primary: #ffffff; /* Main background */
+  --bg-secondary: #f0f6fa; /* Secondary background (light blue tint) */
+  --bg-tertiary: var(--neutral-100); /* Alternative background */
+  --bg-accent: #e6f2fb; /* Accent background (very light blue) */
+  --bg-dark: var(--brand-primary); /* Dark background */
+
+  /* === BUTTON COLORS === */
+  /* Primary Buttons (Navy Blue) */
+  --btn-primary-bg: var(--brand-primary);
+  --btn-primary-text: var(--text-light);
+  --btn-primary-hover-bg: var(--brand-primary-light);
+  --btn-primary-hover-text: var(--text-light);
+  --btn-primary-active-bg: var(--brand-primary-dark);
+  --btn-primary-focus-ring: var(--brand-secondary);
+
+  /* Secondary Buttons (Light Blue) */
+  --btn-secondary-bg: var(--brand-accent);
+  --btn-secondary-text: var(--text-light);
+  --btn-secondary-hover-bg: var(--brand-secondary);
+  --btn-secondary-hover-text: var(--text-light);
+  --btn-secondary-active-bg: var(--brand-secondary-dark);
+  --btn-secondary-focus-ring: var(--brand-accent-dark);
+
+  /* Accent Buttons (Action Blue) */
+  --btn-accent-bg: var(--brand-action);
+  --btn-accent-text: var(--text-light);
+  --btn-accent-hover-bg: var(--brand-action-light);
+  --btn-accent-hover-text: var(--text-light);
+  --btn-accent-active-bg: var(--brand-action-dark);
+  --btn-accent-focus-ring: var(--brand-action-light);
+
+  /* Outline Buttons */
+  --btn-outline-border: var(--neutral-300);
+  --btn-outline-text: var(--text-primary);
+  --btn-outline-hover-border: var(--brand-secondary);
+  --btn-outline-hover-text: var(--brand-secondary);
+  --btn-outline-active-border: var(--brand-primary);
+  --btn-outline-active-text: var(--brand-primary);
+
+  /* Disabled State */
+  --btn-disabled-bg: var(--neutral-300);
+  --btn-disabled-text: var(--neutral-500);
+
+  /* === LINK COLORS === */
+  --link-default: var(--brand-secondary);
+  --link-hover: var(--brand-primary);
+  --link-active: var(--brand-primary-dark);
+  --link-visited: var(--brand-secondary-dark);
+
+  /* === BORDER COLORS === */
+  --border-light: var(--neutral-200);
+  --border-default: var(--neutral-300);
+  --border-dark: var(--neutral-400);
+  --border-focus: var(--brand-secondary);
+
+  /* === FORM COLORS === */
+  --form-bg: var(--bg-primary);
+  --form-border: var(--border-default);
+  --form-border-hover: var(--neutral-400);
+  --form-border-focus: var(--brand-secondary);
+  --form-text: var(--text-primary);
+  --form-placeholder: var(--text-muted);
+
+  /* === STATUS COLORS === */
+  --status-success: #22c55e;
+  --status-success-light: #86efac;
+  --status-success-dark: #16a34a;
+  
+  --status-warning: #f59e0b;
+  --status-warning-light: #fbbf24;
+  --status-warning-dark: #d97706;
+  
+  --status-error: #ef4444;
+  --status-error-light: #fca5a5;
+  --status-error-dark: #dc2626;
+  
+  --status-info: var(--brand-secondary);
+  --status-info-light: var(--brand-accent);
+  --status-info-dark: var(--brand-secondary-dark);
+
+  /* === SHADOWS === */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-default: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+  /* === OVERLAYS === */
+  --overlay-light: rgba(255, 255, 255, 0.95);
+  --overlay-dark: rgba(0, 42, 92, 0.85); /* Navy with transparency */
+  --overlay-gradient-start: rgba(0, 42, 92, 0.9);
+  --overlay-gradient-end: rgba(23, 94, 145, 0.8);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* === BODY === */
+body {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* === BODY === */
+body {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+}
+
+/* === CONTAINER STANDARDS === */
+.container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@media (min-width: 1024px) {
+  .container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}
+
+/* === TYPOGRAPHY STANDARDS === */
+/* Base font size */
+html {
+  font-size: 16px;
+}
+
+/* Professional Paragraph Sizes */
+p {
+  font-size: 1rem; /* 16px */
+  line-height: 1.75; /* 28px */
+  font-weight: 400;
+  margin-bottom: 1rem;
+}
+
+.text-sm {
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.5;
+}
+
+.text-base {
+  font-size: 1rem; /* 16px */
+  line-height: 1.75;
+}
+
+.text-lg {
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.75;
+}
+
+.text-xl {
+  font-size: 1.25rem; /* 20px */
+  line-height: 1.6;
+}
+
+/* === HEADINGS - Professional Standards === */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--brand-primary);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.02em;
+}
+
+/* H1 - Main Page Titles */
+h1 {
+  font-size: 2.25rem; /* 36px */
+  line-height: 1.2;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  h1 {
+    font-size: 2.75rem; /* 44px */
+  }
+}
+
+@media (min-width: 1024px) {
+  h1 {
+    font-size: 3rem; /* 48px */
+  }
+}
+
+/* H2 - Section Titles */
+h2 {
+  font-size: 1.875rem; /* 30px */
+  line-height: 1.3;
+  font-weight: 700;
+  margin-bottom: 0.875rem;
+}
+
+@media (min-width: 768px) {
+  h2 {
+    font-size: 2.25rem; /* 36px */
+  }
+}
+
+@media (min-width: 1024px) {
+  h2 {
+    font-size: 2.5rem; /* 40px */
+  }
+}
+
+/* H3 - Subsection Titles */
+h3 {
+  font-size: 1.5rem; /* 24px */
+  line-height: 1.4;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  h3 {
+    font-size: 1.75rem; /* 28px */
+  }
+}
+
+@media (min-width: 1024px) {
+  h3 {
+    font-size: 2rem; /* 32px */
+  }
+}
+
+/* H4 - Card Titles */
+h4 {
+  font-size: 1.25rem; /* 20px */
+  line-height: 1.5;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  h4 {
+    font-size: 1.375rem; /* 22px */
+  }
+}
+
+/* H5 - Small Headings */
+h5 {
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.5;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+/* H6 - Smallest Headings */
+h6 {
+  font-size: 1rem; /* 16px */
+  line-height: 1.5;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+/* === TEXT UTILITIES === */
+.text-primary {
+  color: var(--text-primary);
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+.text-tertiary {
+  color: var(--text-tertiary);
+}
+
+.text-light {
+  color: var(--text-light);
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+.text-brand {
+  color: var(--brand-primary);
+}
+
+.text-accent {
+  color: var(--brand-action);
+}
+
+.text-action {
+  color: var(--brand-action);
+}
+
+/* === LINKS === */
+a {
+  color: var(--link-default);
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+}
+
+a:hover {
+  color: var(--link-hover);
+}
+
+a:active {
+  color: var(--link-active);
+}
+
+a:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.link-color {
+  color: var(--link-default);
+}
+
+.link-color:hover {
+  color: var(--link-hover);
+}
+
+/* === BUTTONS === */
+button {
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  border: none;
+  font-weight: 600;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Primary Button */
+.btn-primary {
+  background-color: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--btn-primary-hover-bg);
+  color: var(--btn-primary-hover-text);
+}
+
+.btn-primary:active:not(:disabled) {
+  background-color: var(--btn-primary-active-bg);
+}
+
+.btn-primary:focus-visible {
+  outline: 2px solid var(--btn-primary-focus-ring);
+  outline-offset: 2px;
+}
+
+/* Secondary Button */
+.btn-secondary {
+  background-color: var(--btn-secondary-bg);
+  color: var(--btn-secondary-text);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: var(--btn-secondary-hover-bg);
+  color: var(--btn-secondary-hover-text);
+}
+
+.btn-secondary:active:not(:disabled) {
+  background-color: var(--btn-secondary-active-bg);
+}
+
+.btn-secondary:focus-visible {
+  outline: 2px solid var(--btn-secondary-focus-ring);
+  outline-offset: 2px;
+}
+
+/* Accent Button (Action Blue) */
+.btn-accent {
+  background-color: var(--btn-accent-bg);
+  color: var(--btn-accent-text);
+}
+
+.btn-accent:hover:not(:disabled) {
+  background-color: var(--btn-accent-hover-bg);
+  color: var(--btn-accent-hover-text);
+}
+
+.btn-accent:active:not(:disabled) {
+  background-color: var(--btn-accent-active-bg);
+}
+
+.btn-accent:focus-visible {
+  outline: 2px solid var(--btn-accent-focus-ring);
+  outline-offset: 2px;
+}
+
+/* Outline Button */
+.btn-outline {
+  background-color: transparent;
+  color: var(--btn-outline-text);
+  border: 2px solid var(--btn-outline-border);
+}
+
+.btn-outline:hover:not(:disabled) {
+  border-color: var(--btn-outline-hover-border);
+  color: var(--btn-outline-hover-text);
+  background-color: var(--bg-secondary);
+}
+
+.btn-outline:active:not(:disabled) {
+  border-color: var(--btn-outline-active-border);
+  color: var(--btn-outline-active-text);
+}
+
+.btn-outline:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+/* === BACKGROUND UTILITIES === */
+.bg-main {
+  background-color: var(--bg-primary);
+}
+
+.bg-accent {
+  background-color: var(--bg-secondary);
+}
+
+.bg-card {
+  background-color: var(--bg-primary);
+}
+
+.bg-header-footer {
+  background-color: var(--bg-dark);
+}
+
+.bg-alt-accent {
+  background-color: var(--bg-accent);
+}
+
+.bg-action {
+  background-color: var(--brand-action);
+}
+
+.bg-action:hover {
+  background-color: var(--brand-action-dark);
+}
+
+/* === BORDER UTILITIES === */
+.border-custom {
+  border-color: var(--border-default);
+}
+
+.border-light {
+  border-color: var(--border-light);
+}
+
+.border-focus {
+  border-color: var(--border-focus);
+}
+
+/* === SHADOW UTILITIES === */
+.shadow-custom {
+  box-shadow: var(--shadow-default);
+}
+
+.shadow-sm {
+  box-shadow: var(--shadow-sm);
+}
+
+.shadow-md {
+  box-shadow: var(--shadow-md);
+}
+
+.shadow-lg {
+  box-shadow: var(--shadow-lg);
+}
+
+/* === FOCUS STATES === */
+*:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--form-border-focus);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(23, 94, 145, 0.1);
+}
+
+/* === FORM ELEMENTS === */
+input,
+textarea,
+select {
+  background-color: var(--form-bg);
+  border: 1px solid var(--form-border);
+  color: var(--form-text);
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--form-placeholder);
+}
+
+input:hover,
+textarea:hover,
+select:hover {
+  border-color: var(--form-border-hover);
+}
+
+/* === OVERLAYS === */
+/* Navbar overlay - light with subtle pattern visibility */
+.navbar-overlay {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.92) 0%,
+    rgba(240, 246, 250, 0.68) 50%,
+    rgba(255, 255, 255, 0.92) 100%
+  );
+}
+
+/* Header overlay gradient using brand colors */
+.header-overlay {
+  background: linear-gradient(
+    135deg,
+    var(--overlay-gradient-start) 0%,
+    var(--overlay-gradient-end) 50%,
+    var(--overlay-gradient-start) 100%
+  );
+}
+
+/* Footer overlay gradient using brand-primary colors */
+.footer-overlay {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 42, 92, 0.92) 0%,
+    rgba(0, 61, 122, 0.95) 50%,
+    rgba(0, 42, 92, 0.92) 100%
+  );
+}
+
+/* === STATUS COLORS === */
+.text-success {
+  color: var(--status-success);
+}
+
+.text-warning {
+  color: var(--status-warning);
+}
+
+.text-error {
+  color: var(--status-error);
+}
+
+.text-info {
+  color: var(--status-info);
+}
+
+.bg-success {
+  background-color: var(--status-success-light);
+  color: var(--status-success-dark);
+}
+
+.bg-warning {
+  background-color: var(--status-warning-light);
+  color: var(--status-warning-dark);
+}
+
+.bg-error {
+  background-color: var(--status-error-light);
+  color: var(--status-error-dark);
+}
+
+.bg-info {
+  background-color: var(--status-info-light);
+  color: var(--status-info-dark);
+}
+
+/* === HOVER EFFECTS === */
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* === CUSTOM COMPONENTS === */
+.devotional-image-bg {
+  background: url("/Gbur/m-7.jpg") center/cover;
+}
+
+/* === PAGE CONTAINER STANDARDS === */
+.page-container {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .page-container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .page-container {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}
+
+/* === SECTION SPACING === */
+.section-spacing {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+  .section-spacing {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-spacing {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
 }

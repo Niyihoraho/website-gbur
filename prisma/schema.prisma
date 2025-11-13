@@ -1,0 +1,165 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
+  engineType    = "library"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// Simple Authentication
+
+model User {
+  id            String         @id @default(cuid())
+  email         String?        @unique
+  password      String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+// Organizational Structure
+model Region {
+  id             Int             @id @default(autoincrement())
+  name           String          @unique
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  universities   University[]
+  regionalStaffs RegionalStaff[]
+}
+
+model University {
+  id          Int          @id @default(autoincrement())
+  name        String
+  regionId    Int
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  region      Region       @relation(fields: [regionId], references: [id])
+
+
+  @@index([regionId])
+}
+
+model SmallGroup {
+  id             Int       @id @default(autoincrement())
+  name           String
+  type           GroupType @default(student)
+  province       String?
+  district       String?
+  sector         String?
+  address        String?
+  cellLeaderName String?
+  WhatappNumber  String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+// Blog System
+model BlogCategory {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  slug        String   @unique
+  order       Int      @default(0)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  blogs       Blog[]
+}
+
+model Blog {
+  id            Int          @id @default(autoincrement())
+  title         String
+  slug          String       @unique
+  content       String       @db.LongText
+  excerpt       String?      @db.Text
+  featuredImage String?
+  categoryId    Int
+  status        BlogStatus   @default(draft)
+  publishedAt   DateTime?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  category      BlogCategory @relation(fields: [categoryId], references: [id])
+
+  @@index([categoryId])
+  @@index([status])
+  @@index([publishedAt])
+}
+
+// Newsletter Subscription
+model Subscription {
+  id            Int       @id @default(autoincrement())
+  firstName     String
+  lastName      String
+  email         String    @unique
+  isActive      Boolean   @default(true)
+  subscribedAt  DateTime  @default(now())
+  unsubscribedAt DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([email])
+  @@index([isActive])
+}
+
+// Contact Messages
+model Message {
+  id          Int           @id @default(autoincrement())
+  fullName    String
+  email       String
+  phoneNumber String?
+  subject     MessageSubject
+  message     String        @db.LongText
+  status      MessageStatus @default(unread)
+  readAt      DateTime?
+  repliedAt   DateTime?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@index([email])
+  @@index([status])
+  @@index([subject])
+  @@index([createdAt])
+}
+
+// Regional Staff
+model RegionalStaff {
+  id        Int       @id @default(autoincrement())
+  regionId  Int
+  name      String
+  phone     String?
+  WhatappNumber   String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  region    Region    @relation(fields: [regionId], references: [id])
+
+  @@index([regionId])
+}
+
+enum GroupType {
+  student
+  graduate
+}
+
+
+enum BlogStatus {
+  draft
+  published
+  archived
+}
+
+enum MessageSubject {
+  general
+  inquiry
+  support
+  feedback
+  partnership
+  other
+}
+
+enum MessageStatus {
+  unread
+  read
+  replied
+  archived
+}
