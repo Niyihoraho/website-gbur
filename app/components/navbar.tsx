@@ -162,7 +162,7 @@ const Navbar = () => {
                     pathname === '/campus' ? 'border-b-2 border-action' : 'border-b-2 border-transparent hover:border-link-hover'
                   }`}
                 >
-                  campus
+                  CAMPUS
                 </Link>
                 <Link
                   href="/graduate"
@@ -320,7 +320,7 @@ const Navbar = () => {
                   pathname === '/campus' ? 'text-action border-l-4 border-action pl-3' : 'pl-3'
                 }`}
               >
-                campus
+                CAMPUS
               </Link>
               <Link
                 href="/graduate"
