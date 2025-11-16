@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, Suspense } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
@@ -16,7 +16,7 @@ import DeleteConfirmModal from '../components/DeleteConfirmModal'
 import { blogAPI, categoryAPI, BlogPost, BlogCategory } from '../lib/api'
 import { useAuth } from '../contexts/AuthContext'
 
-const BlogPage = () => {
+const BlogPageContent = () => {
   const { isAdmin } = useAuth()
   const queryClient = useQueryClient()
   const searchParams = useSearchParams()
@@ -509,6 +509,21 @@ const BlogPage = () => {
         type="category"
       />
     </>
+  )
+}
+
+const BlogPage = () => {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-accent flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-action"></div>
+          <p className="mt-4 text-secondary">Loading...</p>
+        </div>
+      </div>
+    }>
+      <BlogPageContent />
+    </Suspense>
   )
 }
 
