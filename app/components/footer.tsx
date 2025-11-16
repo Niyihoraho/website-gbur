@@ -63,14 +63,6 @@ const Footer = () => {
               Discover how students across campus are coming together to build
               meaningful relationships centered on Christ and His teachings.
             </p>
-            <div>
-              <Link
-                href="/Donate"
-                className="inline-block text-white border-2 border-white px-6 py-2.5 rounded-lg font-semibold text-sm md:text-base transition-all duration-300 hover:bg-white hover:text-brand shadow-sm"
-              >
-                Donate
-              </Link>
-            </div>
           </div>
 
           {/* Middle Section - Links */}
@@ -179,7 +171,7 @@ const Footer = () => {
             © 2025{' '}
             <button
               onClick={() => setIsPasswordModalOpen(true)}
-              className="underline hover:text-light transition-colors cursor-pointer"
+              className="hover:text-light transition-colors cursor-pointer"
             >
               GBUR®
             </button>

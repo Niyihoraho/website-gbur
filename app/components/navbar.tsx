@@ -157,9 +157,9 @@ const Navbar = () => {
                   BLOG
                 </Link>
                 <Link
-                  href="/campus"
+                  href="/compus"
                   className={`text-primary link-color font-bold text-sm tracking-wide transition-colors pb-1 ${
-                    pathname === '/campus' ? 'border-b-2 border-action' : 'border-b-2 border-transparent hover:border-link-hover'
+                    pathname === '/compus' ? 'border-b-2 border-action' : 'border-b-2 border-transparent hover:border-link-hover'
                   }`}
                 >
                   CAMPUS
@@ -314,10 +314,10 @@ const Navbar = () => {
                 BLOG
               </Link>
               <Link
-                href="/campus"
+                href="/compus"
                 onClick={closeMobileMenu}
                 className={`block text-primary link-color font-bold text-base transition-colors py-2 ${
-                  pathname === '/campus' ? 'text-action border-l-4 border-action pl-3' : 'pl-3'
+                  pathname === '/compus' ? 'text-action border-l-4 border-action pl-3' : 'pl-3'
                 }`}
               >
                 CAMPUS

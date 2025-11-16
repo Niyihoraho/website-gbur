@@ -1,6 +1,7 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import { categoryAPI, BlogCategory, CreateBlogCategoryInput } from '../lib/api'
 
 interface AddCategoryModalProps {
@@ -22,11 +23,18 @@ function generateSlug(name: string): string {
 const AddCategoryModal = ({ isOpen, onClose, onAdd }: AddCategoryModalProps) => {
   const [formData, setFormData] = useState({
     name: '',
-    order: 0,
   })
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
+
+  // Fetch categories to calculate next order number
+  const { data: categories = [] } = useQuery({
+    queryKey: ['blogCategories'],
+    queryFn: () => categoryAPI.getAll(),
+    enabled: isOpen, // Only fetch when modal is open
+  })
+
 
   // Handle Escape key to close modal
   React.useEffect(() => {
@@ -47,6 +55,15 @@ const AddCategoryModal = ({ isOpen, onClose, onAdd }: AddCategoryModalProps) => 
     }
   }, [isOpen, isSubmitting, onClose])
 
+  // Calculate next order number
+  const calculateNextOrder = () => {
+    if (categories.length === 0) return 1
+    const maxOrder = Math.max(...categories.map(cat => cat.order || 0))
+    return maxOrder + 1
+  }
+
+  const nextOrder = calculateNextOrder()
+
   const validateForm = () => {
     const newErrors: Record<string, string> = {}
 
@@ -58,10 +75,6 @@ const AddCategoryModal = ({ isOpen, onClose, onAdd }: AddCategoryModalProps) => 
       newErrors.name = 'Category name is too long (max 255 characters)'
     }
 
-    if (formData.order < 0) {
-      newErrors.order = 'Order must be a positive number'
-    }
-
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
@@ -70,7 +83,7 @@ const AddCategoryModal = ({ isOpen, onClose, onAdd }: AddCategoryModalProps) => 
     const { name, value } = e.target
     setFormData(prev => ({
       ...prev,
-      [name]: name === 'order' ? parseInt(value, 10) || 0 : value
+      [name]: value
     }))
     // Clear error when user starts typing
     if (errors[name]) {
@@ -95,11 +108,11 @@ const AddCategoryModal = ({ isOpen, onClose, onAdd }: AddCategoryModalProps) => 
     try {
       const slug = generateSlug(formData.name)
 
-      // Create category data
+      // Create category data with auto-calculated order
       const categoryData: CreateBlogCategoryInput = {
         name: formData.name.trim(),
         slug,
-        order: formData.order,
+        order: nextOrder,
         isActive: true,
       }
 
@@ -112,7 +125,6 @@ const AddCategoryModal = ({ isOpen, onClose, onAdd }: AddCategoryModalProps) => 
       // Reset form
       setFormData({
         name: '',
-        order: 0,
       })
       setErrors({})
       setSubmitError(null)
@@ -129,7 +141,6 @@ const AddCategoryModal = ({ isOpen, onClose, onAdd }: AddCategoryModalProps) => 
     if (!isSubmitting) {
       setFormData({
         name: '',
-        order: 0,
       })
       setErrors({})
       setSubmitError(null)
@@ -165,6 +176,14 @@ const AddCategoryModal = ({ isOpen, onClose, onAdd }: AddCategoryModalProps) => 
 
         {/* Body */}
         <div className="p-4 sm:p-6">
+          {/* Next Order Display */}
+          <div className="mb-4 p-3 bg-action/10 border-l-4 border-action rounded-lg">
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-secondary font-medium">Order:</span>
+              <span className="text-xl font-bold text-action">{nextOrder}</span>
+            </div>
+          </div>
+
           {submitError && (
             <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
               <p className="text-red-800 text-sm">{submitError}</p>
@@ -193,32 +212,6 @@ const AddCategoryModal = ({ isOpen, onClose, onAdd }: AddCategoryModalProps) => 
               {errors.name && (
                 <p className="mt-1 text-xs sm:text-sm text-red-500">{errors.name}</p>
               )}
-            </div>
-
-            {/* Order */}
-            <div>
-              <label htmlFor="order" className="block text-xs sm:text-sm font-semibold text-brand mb-2">
-                Order <span className="text-xs text-secondary font-normal">(Optional)</span>
-              </label>
-              <input
-                type="number"
-                id="order"
-                name="order"
-                value={formData.order}
-                onChange={handleChange}
-                min="0"
-                className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border text-sm sm:text-base ${
-                  errors.order
-                    ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
-                    : 'border-custom focus:border-action focus:ring-action'
-                } focus:outline-none focus:ring-2 text-secondary bg-white transition-colors`}
-                placeholder="0"
-                disabled={isSubmitting}
-              />
-              {errors.order && (
-                <p className="mt-1 text-xs sm:text-sm text-red-500">{errors.order}</p>
-              )}
-              <p className="mt-1 text-xs text-secondary">Categories are sorted by this number (lower numbers appear first)</p>
             </div>
 
             {/* Submit Button */}
