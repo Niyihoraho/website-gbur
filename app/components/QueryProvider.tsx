@@ -22,7 +22,7 @@ export function QueryProvider({ children }: { children: ReactNode }) {
             // Refetch on reconnect
             refetchOnReconnect: true,
             // Keep previous data while refetching (smoother UX)
-            placeholderData: (previousData) => previousData,
+            placeholderData: (previousData: any) => previousData,
             // Structural sharing to prevent unnecessary re-renders
             structuralSharing: true,
           },

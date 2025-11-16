@@ -6,7 +6,7 @@ export const contactMessageSchema = z.object({
   email: z.string().email('Please enter a valid email address').max(255, 'Email is too long'),
   phoneNumber: z.string().max(50, 'Phone number is too long').optional().nullable(),
   subject: z.enum(['general', 'inquiry', 'support', 'feedback', 'partnership', 'other'], {
-    errorMap: () => ({ message: 'Please select a valid subject' }),
+    message: 'Please select a valid subject',
   }),
   message: z.string().min(10, 'Message must be at least 10 characters long'),
 })

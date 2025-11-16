@@ -303,7 +303,7 @@ const GraduatePage = () => {
                     className="w-full px-4 py-3 rounded-lg border border-custom focus:outline-none focus:ring-2 focus:ring-action focus:border-transparent transition-all bg-white"
                   >
                     {provinces.map((province) => (
-                      <option key={province} value={province}>
+                      <option key={province} value={province || ''}>
                         {province}
                       </option>
                     ))}
@@ -321,7 +321,7 @@ const GraduatePage = () => {
                     disabled={selectedProvince === 'All'}
                   >
                     {districts.map((district) => (
-                      <option key={district} value={district}>
+                      <option key={district} value={district || ''}>
                         {district}
                       </option>
                     ))}

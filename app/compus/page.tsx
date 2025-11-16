@@ -322,7 +322,9 @@ const FindChapterPage = () => {
                 </div>
               ) : error ? (
                 <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                  <p className="text-red-800">{error}</p>
+                  <p className="text-red-800">
+                    {error instanceof Error ? error.message : 'Failed to load data. Please try again later.'}
+                  </p>
                 </div>
               ) : (
                 <h2 className="text-xl md:text-2xl font-bold text-brand">
