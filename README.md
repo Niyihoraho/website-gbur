@@ -2,6 +2,22 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+### Environment Variables
+
+1. Copy `.env.example` to `.env.local`:
+   ```bash
+   cp .env.example .env.local
+   ```
+
+2. Set your admin password in `.env.local`:
+   ```
+   NEXT_PUBLIC_ADMIN_PASSWORD=your_secret_password_here
+   ```
+
+3. **Note**: The admin password is used to access admin features (add/edit/delete blog posts, categories, universities, and small groups). Click on "GBUR®" in the footer to access the admin login.
+
+### Development
+
 First, run the development server:
 
 ```bash

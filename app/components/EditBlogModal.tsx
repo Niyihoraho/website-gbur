@@ -172,11 +172,11 @@ const EditBlogModal = ({ isOpen, onClose, post, onUpdate, onRefresh }: EditBlogM
       return
     }
 
-    // Validate file size (5MB max)
-    if (file.size > 5 * 1024 * 1024) {
+    // Validate file size (20MB max)
+    if (file.size > 20 * 1024 * 1024) {
       setErrors(prev => ({
         ...prev,
-        image: 'File size exceeds 5MB limit'
+        image: 'File size exceeds 20MB limit'
       }))
       return
     }
@@ -476,7 +476,7 @@ const EditBlogModal = ({ isOpen, onClose, post, onUpdate, onRefresh }: EditBlogM
                     <span className="text-sm text-secondary">
                       {uploadingImage ? 'Uploading...' : imageFile ? imageFile.name : 'Click to upload from PC'}
                     </span>
-                    <span className="text-xs text-secondary">Max 5MB (JPEG, PNG, WebP, GIF)</span>
+                    <span className="text-xs text-secondary">Max 20MB (JPEG, PNG, WebP, GIF)</span>
                   </div>
                 </label>
               </div>

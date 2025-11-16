@@ -31,7 +31,7 @@ const Involved = () => {
       description:
         'Connect with an Gbur chapter near you to join in what God is doing on campus.',
       linkText: 'Search',
-      linkHref: '/compus',
+      linkHref: '/campus',
     },
     {
       icon: (

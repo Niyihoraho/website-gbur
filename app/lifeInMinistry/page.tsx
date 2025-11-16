@@ -116,7 +116,7 @@ const LifeInMinistryPage = () => {
           description: 'Equipping students and staff with skills and knowledge for effective ministry.',
           images: [
             '/lifeinGbu/office trainning.jpg',
-            '/lifeinGbu/training to the compus.jpg',
+            '/lifeinGbu/training to the campus.jpg',
           ],
         },
         {

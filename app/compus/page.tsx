@@ -1,7 +1,8 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Image from 'next/image'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import Navbar from '../components/navbar'
 import Footer from '../components/footer'
 import FloatingActionButton from '../components/FloatingActionButton'
@@ -15,14 +16,10 @@ import { useAuth } from '../contexts/AuthContext'
 
 const FindChapterPage = () => {
   const { isAdmin } = useAuth()
+  const queryClient = useQueryClient()
   const [selectedRegion, setSelectedRegion] = useState<string>('All')
   const [selectedUniversity, setSelectedUniversity] = useState<University | null>(null)
   const [searchQuery, setSearchQuery] = useState<string>('')
-  const [universities, setUniversities] = useState<University[]>([])
-  const [regions, setRegions] = useState<Region[]>([])
-  const [regionalStaff, setRegionalStaff] = useState<RegionalStaff[]>([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
   
   // Dropdown and modal states
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
@@ -38,34 +35,45 @@ const FindChapterPage = () => {
   const [selectedUniversityForEdit, setSelectedUniversityForEdit] = useState<University | null>(null)
   // --- END OF FIX ---
 
-  const [isDeleting, setIsDeleting] = useState(false)
+  // Queries for data
+  const {
+    data: universities = [],
+    isLoading: isLoadingUniversities,
+    error: universitiesError,
+  } = useQuery({
+    queryKey: ['universities'],
+    queryFn: () => organizationAPI.universities.getAll(),
+    retry: 2,
+    retryDelay: 300,
+    placeholderData: (previousData) => previousData,
+  })
 
-  // Fetch data from database
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setIsLoading(true)
-        const [universitiesData, regionsData, staffData] = await Promise.all([
-          organizationAPI.universities.getAll(),
-          organizationAPI.regions.getAll(),
-          organizationAPI.regionalStaff.getAll(),
-        ])
-        setUniversities(universitiesData)
-        setRegions(regionsData)
-        setRegionalStaff(staffData)
-      } catch (err: any) {
-        console.error('Error fetching data:', err)
-        setError('Failed to load universities. Please try again later.')
-        setUniversities([])
-        setRegions([])
-        setRegionalStaff([])
-      } finally {
-        setIsLoading(false)
-      }
-    }
+  const {
+    data: regions = [],
+    isLoading: isLoadingRegions,
+    error: regionsError,
+  } = useQuery({
+    queryKey: ['regions'],
+    queryFn: () => organizationAPI.regions.getAll(),
+    retry: 2,
+    retryDelay: 300,
+    placeholderData: (previousData) => previousData,
+  })
 
-    fetchData()
-  }, [])
+  const {
+    data: regionalStaff = [],
+    isLoading: isLoadingStaff,
+    error: staffError,
+  } = useQuery({
+    queryKey: ['regionalStaff'],
+    queryFn: () => organizationAPI.regionalStaff.getAll(),
+    retry: 2,
+    retryDelay: 300,
+    placeholderData: (previousData) => previousData,
+  })
+
+  const isLoading = isLoadingUniversities || isLoadingRegions || isLoadingStaff
+  const error = universitiesError || regionsError || staffError
 
   // Helper function to get staff for a region
   const getStaffForRegion = (regionId: number): RegionalStaff | undefined => {
@@ -88,34 +96,31 @@ const FindChapterPage = () => {
   }
 
   // Handle adding new items
+  // Delete mutation
+  const deleteUniversityMutation = useMutation({
+    mutationFn: (universityId: number) => organizationAPI.universities.delete(universityId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['universities'] })
+      queryClient.invalidateQueries({ queryKey: ['regionalStaff'] })
+      setIsDeleteModalOpen(false)
+      setSelectedUniversityForEdit(null)
+    },
+    retry: 2,
+  })
+
   const handleAddRegion = async (region: Region) => {
-    // Refresh regions list
-    try {
-      const updatedRegions = await organizationAPI.regions.getAll()
-      setRegions(updatedRegions)
-    } catch (err) {
-      console.error('Error refreshing regions:', err)
-    }
+    // Invalidate query to refetch
+    await queryClient.invalidateQueries({ queryKey: ['regions'] })
   }
 
   const handleAddUniversity = async (university: University) => {
-    // Refresh universities list
-    try {
-      const updatedUniversities = await organizationAPI.universities.getAll()
-      setUniversities(updatedUniversities)
-    } catch (err) {
-      console.error('Error refreshing universities:', err)
-    }
+    // Invalidate query to refetch
+    await queryClient.invalidateQueries({ queryKey: ['universities'] })
   }
 
   const handleAddRegionalStaff = async (staff: RegionalStaff) => {
-    // Refresh regional staff list
-    try {
-      const updatedStaff = await organizationAPI.regionalStaff.getAll()
-      setRegionalStaff(updatedStaff)
-    } catch (err) {
-      console.error('Error refreshing regional staff:', err)
-    }
+    // Invalidate query to refetch
+    await queryClient.invalidateQueries({ queryKey: ['regionalStaff'] })
   }
 
   // Handle editing university
@@ -125,16 +130,11 @@ const FindChapterPage = () => {
   }
 
   const handleUpdateUniversity = async (updatedUniversity: University) => {
-    try {
-      const [updatedUniversities, updatedStaff] = await Promise.all([
-        organizationAPI.universities.getAll(),
-        organizationAPI.regionalStaff.getAll(),
-      ])
-      setUniversities(updatedUniversities)
-      setRegionalStaff(updatedStaff)
-    } catch (err) {
-      console.error('Error refreshing universities:', err)
-    }
+    // Invalidate queries to refetch
+    await Promise.all([
+      queryClient.invalidateQueries({ queryKey: ['universities'] }),
+      queryClient.invalidateQueries({ queryKey: ['regionalStaff'] }),
+    ])
   }
 
   // Handle deleting university
@@ -145,24 +145,7 @@ const FindChapterPage = () => {
 
   const handleDeleteConfirm = async () => {
     if (!selectedUniversityForEdit) return
-
-    setIsDeleting(true)
-    try {
-      await organizationAPI.universities.delete(selectedUniversityForEdit.id)
-      const [updatedUniversities, updatedStaff] = await Promise.all([
-        organizationAPI.universities.getAll(),
-        organizationAPI.regionalStaff.getAll(),
-      ])
-      setUniversities(updatedUniversities)
-      setRegionalStaff(updatedStaff)
-      setIsDeleteModalOpen(false)
-      setSelectedUniversityForEdit(null)
-    } catch (err: any) {
-      console.error('Error deleting university:', err)
-      setError(err.response?.data?.error || 'Failed to delete university')
-    } finally {
-      setIsDeleting(false)
-    }
+    await deleteUniversityMutation.mutateAsync(selectedUniversityForEdit.id)
   }
 
   const handleDropdownOption = (option: string) => {
@@ -359,8 +342,9 @@ const FindChapterPage = () => {
                       key={university.id}
                       className="bg-main rounded-xl p-6 shadow-custom border border-custom/30 hover:shadow-lg hover:border-action/50 transition-all duration-300 transform hover:-translate-y-1 relative"
                     >
-                      {/* Edit and Delete Icons */}
-                      <div className="absolute top-4 right-4 flex gap-2 z-10">
+                      {/* Edit and Delete Icons - Only visible to admin */}
+                      {isAdmin && (
+                        <div className="absolute top-4 right-4 flex gap-2 z-10">
                         <button
                           onClick={(e) => {
                             e.stopPropagation()
@@ -407,12 +391,13 @@ const FindChapterPage = () => {
                             />
                           </svg>
                         </button>
-                      </div>
+                        </div>
+                      )}
                       <div 
                         onClick={() => handleUniversityClick(university)}
                         className="mb-4 cursor-pointer"
                       >
-                        <h3 className="text-lg font-bold text-brand mb-2 pr-16">
+                        <h3 className={`text-lg font-bold text-brand mb-2 ${isAdmin ? 'pr-16' : ''}`}>
                           {university.name}
                         </h3>
                       </div>
@@ -612,7 +597,7 @@ const FindChapterPage = () => {
         }}
         onConfirm={handleDeleteConfirm}
         title={selectedUniversityForEdit?.name || ''}
-        isDeleting={isDeleting}
+        isDeleting={deleteUniversityMutation.isPending}
         type="post"
       />
     </>

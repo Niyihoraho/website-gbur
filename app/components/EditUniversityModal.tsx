@@ -112,7 +112,24 @@ const EditUniversityModal = ({ isOpen, onClose, university, onUpdate }: EditUniv
       onClose()
     } catch (error: any) {
       console.error('Error updating university:', error)
-      setSubmitError(error.response?.data?.error || 'Failed to update university. Please try again.')
+      console.error('Error response:', error.response?.data)
+      
+      // Extract detailed error message
+      let errorMessage = 'Failed to update university. Please try again.'
+      if (error.response?.data?.error) {
+        errorMessage = error.response.data.error
+        if (error.response.data.message) {
+          errorMessage += ': ' + error.response.data.message
+        }
+      } else if (error.response?.data?.details) {
+        // Show first validation error
+        const firstError = error.response.data.details[0]
+        if (firstError?.message) {
+          errorMessage = firstError.message
+        }
+      }
+      
+      setSubmitError(errorMessage)
     } finally {
       setIsSubmitting(false)
     }

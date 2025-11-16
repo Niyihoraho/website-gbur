@@ -1,47 +1,41 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import Navbar from '../components/navbar'
 import Footer from '../components/footer'
 import AddSmallGroupModal from '../components/AddSmallGroupModal'
 import EditSmallGroupModal from '../components/EditSmallGroupModal'
 import DeleteConfirmModal from '../components/DeleteConfirmModal'
 import { organizationAPI, SmallGroup as APISmallGroup } from '../lib/api'
+import { useAuth } from '../contexts/AuthContext'
 
 const GraduatePage = () => {
+  const { isAdmin } = useAuth()
+  const queryClient = useQueryClient()
   const [selectedProvince, setSelectedProvince] = useState<string>('All')
   const [selectedDistrict, setSelectedDistrict] = useState<string>('All')
-  const [smallGroups, setSmallGroups] = useState<APISmallGroup[]>([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
   
   // Modal states
   const [isSmallGroupModalOpen, setIsSmallGroupModalOpen] = useState(false)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const [selectedSmallGroup, setSelectedSmallGroup] = useState<APISmallGroup | null>(null)
-  const [isDeleting, setIsDeleting] = useState(false)
 
-  // Fetch graduate small groups from database
-  useEffect(() => {
-    const fetchSmallGroups = async () => {
-      try {
-        setIsLoading(true)
-        const data = await organizationAPI.smallGroups.getAll('graduate')
-        setSmallGroups(data)
-      } catch (err: any) {
-        console.error('Error fetching small groups:', err)
-        setError('Failed to load small groups. Please try again later.')
-        setSmallGroups([])
-      } finally {
-        setIsLoading(false)
-      }
-    }
-
-    fetchSmallGroups()
-  }, [])
+  // Query for graduate small groups
+  const {
+    data: smallGroups = [],
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ['smallGroups', 'graduate'],
+    queryFn: () => organizationAPI.smallGroups.getAll('graduate'),
+    retry: 2,
+    retryDelay: 300,
+    placeholderData: (previousData) => previousData,
+  })
 
   const scrollToSmallGroups = () => {
     const element = document.getElementById('find-small-groups')
@@ -63,15 +57,21 @@ const GraduatePage = () => {
     return provinceMatch && districtMatch
   })
 
+  // Delete mutation
+  const deleteSmallGroupMutation = useMutation({
+    mutationFn: (groupId: number) => organizationAPI.smallGroups.delete(groupId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['smallGroups', 'graduate'] })
+      setIsDeleteModalOpen(false)
+      setSelectedSmallGroup(null)
+    },
+    retry: 2,
+  })
+
   // Handle adding new items
   const handleAddSmallGroup = async (smallGroup: APISmallGroup) => {
-    // Refresh small groups list
-    try {
-      const updatedGroups = await organizationAPI.smallGroups.getAll('graduate')
-      setSmallGroups(updatedGroups)
-    } catch (err) {
-      console.error('Error refreshing small groups:', err)
-    }
+    // Invalidate query to refetch
+    await queryClient.invalidateQueries({ queryKey: ['smallGroups', 'graduate'] })
   }
 
   // Handle editing small group
@@ -81,12 +81,8 @@ const GraduatePage = () => {
   }
 
   const handleUpdateSmallGroup = async (updatedGroup: APISmallGroup) => {
-    try {
-      const updatedGroups = await organizationAPI.smallGroups.getAll('graduate')
-      setSmallGroups(updatedGroups)
-    } catch (err) {
-      console.error('Error refreshing small groups:', err)
-    }
+    // Invalidate query to refetch
+    await queryClient.invalidateQueries({ queryKey: ['smallGroups', 'graduate'] })
   }
 
   // Handle deleting small group
@@ -97,20 +93,7 @@ const GraduatePage = () => {
 
   const handleDeleteConfirm = async () => {
     if (!selectedSmallGroup) return
-
-    setIsDeleting(true)
-    try {
-      await organizationAPI.smallGroups.delete(selectedSmallGroup.id)
-      const updatedGroups = await organizationAPI.smallGroups.getAll('graduate')
-      setSmallGroups(updatedGroups)
-      setIsDeleteModalOpen(false)
-      setSelectedSmallGroup(null)
-    } catch (err: any) {
-      console.error('Error deleting small group:', err)
-      setError(err.response?.data?.error || 'Failed to delete small group')
-    } finally {
-      setIsDeleting(false)
-    }
+    await deleteSmallGroupMutation.mutateAsync(selectedSmallGroup.id)
   }
 
   return (
@@ -276,28 +259,30 @@ const GraduatePage = () => {
                     Connect with other GBUR graduates in your area. We have small groups meeting across different provinces and districts for Bible study, prayer, and mutual encouragement.
                   </p>
                 </div>
-                {/* Dropdown Button */}
-                <div className="flex-shrink-0">
-                  <button
-                    onClick={() => setIsSmallGroupModalOpen(true)}
-                    className="btn-primary px-6 py-3 rounded-lg font-semibold text-sm sm:text-base flex items-center gap-2 hover:opacity-90 transition-opacity whitespace-nowrap"
-                  >
-                    <svg
-                      className="w-5 h-5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
+                {/* Dropdown Button - Only visible to admin */}
+                {isAdmin && (
+                  <div className="flex-shrink-0">
+                    <button
+                      onClick={() => setIsSmallGroupModalOpen(true)}
+                      className="btn-primary px-6 py-3 rounded-lg font-semibold text-sm sm:text-base flex items-center gap-2 hover:opacity-90 transition-opacity whitespace-nowrap"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M12 4v16m8-8H4"
-                      />
-                    </svg>
-                    Add Small Group
-                  </button>
-                </div>
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M12 4v16m8-8H4"
+                        />
+                      </svg>
+                      Add Small Group
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -355,7 +340,9 @@ const GraduatePage = () => {
               </div>
             ) : error ? (
               <div className="col-span-full text-center py-12">
-                <p className="text-red-600 text-lg">{error}</p>
+                <p className="text-red-600 text-lg">
+                  {error instanceof Error ? error.message : 'Failed to load small groups. Please try again later.'}
+                </p>
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -365,40 +352,41 @@ const GraduatePage = () => {
                       key={group.id}
                       className="bg-accent rounded-xl p-6 shadow-custom border border-custom hover:shadow-lg transition-all duration-300 hover:-translate-y-1 relative"
                     >
-                      {/* Edit and Delete Icons */}
-                      <div className="absolute top-4 right-4 flex gap-2">
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            handleEditSmallGroup(group)
-                          }}
-                          className="p-1.5 text-action hover:text-brand hover:bg-accent rounded transition-colors"
-                          title="Edit small group"
-                          aria-label="Edit small group"
-                        >
-                          <svg
-                            className="w-4 h-4"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
+                      {/* Edit and Delete Icons - Only visible to admin */}
+                      {isAdmin && (
+                        <div className="absolute top-4 right-4 flex gap-2">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              handleEditSmallGroup(group)
+                            }}
+                            className="p-1.5 text-action hover:text-brand hover:bg-accent rounded transition-colors"
+                            title="Edit small group"
+                            aria-label="Edit small group"
                           >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                            />
-                          </svg>
-                        </button>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            handleDeleteClick(group)
-                          }}
-                          className="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 rounded transition-colors"
-                          title="Delete small group"
-                          aria-label="Delete small group"
-                        >
+                            <svg
+                              className="w-4 h-4"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                              />
+                            </svg>
+                          </button>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              handleDeleteClick(group)
+                            }}
+                            className="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 rounded transition-colors"
+                            title="Delete small group"
+                            aria-label="Delete small group"
+                          >
                           <svg
                             className="w-4 h-4"
                             fill="none"
@@ -412,10 +400,11 @@ const GraduatePage = () => {
                               d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                             />
                           </svg>
-                        </button>
-                      </div>
+                          </button>
+                        </div>
+                      )}
                       <div className="mb-4">
-                        <h3 className="text-xl font-bold text-action mb-2 pr-16">
+                        <h3 className={`text-xl font-bold text-action mb-2 ${isAdmin ? 'pr-16' : ''}`}>
                           {group.name}
                         </h3>
                         {/* Location Information */}
@@ -554,7 +543,7 @@ const GraduatePage = () => {
         }}
         onConfirm={handleDeleteConfirm}
         title={selectedSmallGroup?.name || ''}
-        isDeleting={isDeleting}
+        isDeleting={deleteSmallGroupMutation.isPending}
         type="post"
       />
     </>

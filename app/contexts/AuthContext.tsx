@@ -12,7 +12,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 // Admin password - in production, this should be in environment variables
 // For now, we'll use a constant. Change this to your desired password
-const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'gbur2025admin'
+const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'gbur@0788'
 
 // Storage key for admin session
 const ADMIN_SESSION_KEY = 'gbur_admin_session'

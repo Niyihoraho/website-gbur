@@ -1,8 +1,10 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useSearchParams } from 'next/navigation'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import Navbar from '../components/navbar'
 import Footer from '../components/footer'
 import FloatingActionButton from '../components/FloatingActionButton'
@@ -16,79 +18,76 @@ import { useAuth } from '../contexts/AuthContext'
 
 const BlogPage = () => {
   const { isAdmin } = useAuth()
-  const [posts, setPosts] = useState<BlogPost[]>([])
-  const [categories, setCategories] = useState<BlogCategory[]>([])
+  const queryClient = useQueryClient()
+  const searchParams = useSearchParams()
+  const categoryIdParam = searchParams.get('categoryId')
+  const selectedCategoryId = categoryIdParam ? parseInt(categoryIdParam, 10) : undefined
+  
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null)
-  const [isDeleting, setIsDeleting] = useState(false)
   const [isEditCategoryModalOpen, setIsEditCategoryModalOpen] = useState(false)
   const [isDeleteCategoryModalOpen, setIsDeleteCategoryModalOpen] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState<BlogCategory | null>(null)
-  const [isDeletingCategory, setIsDeletingCategory] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setIsLoading(true)
-        setError(null)
-        const [blogPosts, blogCategories] = await Promise.all([
-          blogAPI.getAll({ status: 'published' }),
-          categoryAPI.getAll(),
-        ])
-        setPosts(blogPosts)
-        setCategories(blogCategories)
-      } catch (err: any) {
-        console.error('Error fetching blog data:', err)
-        console.error('Error details:', err.response?.data)
-        setError(err.response?.data?.error || err.response?.data?.message || 'Failed to load blog posts')
-        // Set empty array on error
-        setPosts([])
-        setCategories([])
-      } finally {
-        setIsLoading(false)
-      }
-    }
+  // Query for blog posts
+  const queryParams: { status: string; categoryId?: number } = { status: 'published' }
+  if (selectedCategoryId && !isNaN(selectedCategoryId)) {
+    queryParams.categoryId = selectedCategoryId
+  }
 
-    fetchData()
-  }, [])
+  const {
+    data: posts = [],
+    isLoading: isLoadingPosts,
+    error: postsError,
+  } = useQuery({
+    queryKey: ['blogPosts', queryParams],
+    queryFn: () => blogAPI.getAll(queryParams),
+    retry: 2,
+    retryDelay: 300,
+    placeholderData: (previousData) => previousData,
+  })
+
+  // Query for categories
+  const {
+    data: categories = [],
+    isLoading: isLoadingCategories,
+    error: categoriesError,
+  } = useQuery({
+    queryKey: ['blogCategories'],
+    queryFn: () => categoryAPI.getAll(),
+    retry: 2,
+    retryDelay: 300,
+    placeholderData: (previousData) => previousData,
+  })
+
+  const isLoading = isLoadingPosts || isLoadingCategories
+  const error = postsError || categoriesError
+
+  // Mutation for refreshing data
+  const refreshMutation = useMutation({
+    mutationFn: async () => {
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['blogPosts'] }),
+        queryClient.invalidateQueries({ queryKey: ['blogCategories'] }),
+      ])
+    },
+  })
 
   const handleAddBlog = async (newPost: BlogPost) => {
-    // Add new post to the beginning of the array optimistically
-    setPosts([newPost, ...posts])
+    // Invalidate queries to refetch
+    await queryClient.invalidateQueries({ queryKey: ['blogPosts'] })
   }
 
   const handleRefresh = async () => {
-    try {
-      setIsLoading(true)
-      const [blogPosts, blogCategories] = await Promise.all([
-        blogAPI.getAll({ status: 'published' }),
-        categoryAPI.getAll(),
-      ])
-      setPosts(blogPosts)
-      setCategories(blogCategories)
-    } catch (err: any) {
-      console.error('Error refreshing blog posts:', err)
-      setError(err.response?.data?.error || 'Failed to refresh blog posts')
-    } finally {
-      setIsLoading(false)
-    }
+    await refreshMutation.mutateAsync()
   }
 
   const handleAddCategory = async (newCategory: BlogCategory) => {
-    // Refresh categories list to get the updated order from the server
-    try {
-      const updatedCategories = await categoryAPI.getAll()
-      setCategories(updatedCategories)
-    } catch (err: any) {
-      console.error('Error refreshing categories:', err)
-      // Fallback: add new category to the list manually
-      setCategories([...categories, newCategory].sort((a, b) => a.order - b.order))
-    }
+    // Invalidate categories query to refetch
+    await queryClient.invalidateQueries({ queryKey: ['blogCategories'] })
   }
 
   const handleEditPost = (post: BlogPost) => {
@@ -97,8 +96,8 @@ const BlogPage = () => {
   }
 
   const handleUpdatePost = async (updatedPost: BlogPost) => {
-    // Update the post in the list
-    setPosts(posts.map(p => p.id === updatedPost.id ? updatedPost : p))
+    // Invalidate queries to refetch
+    await queryClient.invalidateQueries({ queryKey: ['blogPosts'] })
     setIsEditModalOpen(false)
     setSelectedPost(null)
   }
@@ -108,23 +107,20 @@ const BlogPage = () => {
     setIsDeleteModalOpen(true)
   }
 
-  const handleDeleteConfirm = async () => {
-    if (!selectedPost) return
-
-    setIsDeleting(true)
-    try {
-      await blogAPI.delete(selectedPost.id)
-      // Remove the post from the list
-      setPosts(posts.filter(p => p.id !== selectedPost.id))
+  // Delete mutation
+  const deletePostMutation = useMutation({
+    mutationFn: (postId: number) => blogAPI.delete(postId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['blogPosts'] })
       setIsDeleteModalOpen(false)
       setSelectedPost(null)
-    } catch (err: any) {
-      console.error('Error deleting blog post:', err)
-      setError(err.response?.data?.error || 'Failed to delete blog post')
-      setIsDeleteModalOpen(false)
-    } finally {
-      setIsDeleting(false)
-    }
+    },
+    retry: 2,
+  })
+
+  const handleDeleteConfirm = async () => {
+    if (!selectedPost) return
+    await deletePostMutation.mutateAsync(selectedPost.id)
   }
 
   const handleEditCategory = (category: BlogCategory) => {
@@ -133,20 +129,8 @@ const BlogPage = () => {
   }
 
   const handleUpdateCategory = async (updatedCategory: BlogCategory) => {
-    // If category becomes inactive, refresh the list (since we only show active categories)
-    if (!updatedCategory.isActive) {
-      try {
-        const refreshedCategories = await categoryAPI.getAll()
-        setCategories(refreshedCategories)
-      } catch (err: any) {
-        console.error('Error refreshing categories:', err)
-        // Fallback: update in state anyway
-        setCategories(categories.map(c => c.id === updatedCategory.id ? updatedCategory : c))
-      }
-    } else {
-      // Update the category in the list
-      setCategories(categories.map(c => c.id === updatedCategory.id ? updatedCategory : c))
-    }
+    // Invalidate categories query to refetch
+    await queryClient.invalidateQueries({ queryKey: ['blogCategories'] })
     setIsEditCategoryModalOpen(false)
     setSelectedCategory(null)
   }
@@ -156,23 +140,20 @@ const BlogPage = () => {
     setIsDeleteCategoryModalOpen(true)
   }
 
-  const handleDeleteCategoryConfirm = async () => {
-    if (!selectedCategory) return
-
-    setIsDeletingCategory(true)
-    try {
-      await categoryAPI.delete(selectedCategory.id)
-      // Remove the category from the list
-      setCategories(categories.filter(c => c.id !== selectedCategory.id))
+  // Delete category mutation
+  const deleteCategoryMutation = useMutation({
+    mutationFn: (categoryId: number) => categoryAPI.delete(categoryId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['blogCategories'] })
       setIsDeleteCategoryModalOpen(false)
       setSelectedCategory(null)
-    } catch (err: any) {
-      console.error('Error deleting category:', err)
-      setError(err.response?.data?.error || err.response?.data?.message || 'Failed to delete category')
-      setIsDeleteCategoryModalOpen(false)
-    } finally {
-      setIsDeletingCategory(false)
-    }
+    },
+    retry: 2,
+  })
+
+  const handleDeleteCategoryConfirm = async () => {
+    if (!selectedCategory) return
+    await deleteCategoryMutation.mutateAsync(selectedCategory.id)
   }
 
   return (
@@ -219,12 +200,15 @@ const BlogPage = () => {
 
                 {error && (
                   <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
-                    <p className="text-red-800">{error}</p>
+                    <p className="text-red-800">
+                      {error instanceof Error ? error.message : 'Failed to load blog posts'}
+                    </p>
                     <button
                       onClick={handleRefresh}
                       className="mt-2 text-red-600 hover:text-red-800 underline text-sm"
+                      disabled={refreshMutation.isPending}
                     >
-                      Try again
+                      {refreshMutation.isPending ? 'Refreshing...' : 'Try again'}
                     </button>
                   </div>
                 )}
@@ -380,6 +364,20 @@ const BlogPage = () => {
                     {categories.length === 0 && !isLoading && (
                       <li className="text-sm text-secondary">No categories available</li>
                     )}
+                    <li
+                      className={`flex items-center justify-between gap-2 pb-3 mb-3 border-b border-custom`}
+                    >
+                      <Link
+                        href="/blog"
+                        className={`flex-1 text-sm transition-colors ${
+                          !selectedCategoryId 
+                            ? 'text-action font-semibold' 
+                            : 'text-secondary hover:text-action'
+                        }`}
+                      >
+                        All Posts
+                      </Link>
+                    </li>
                     {categories.map((category, index) => (
                       <li
                         key={category.id}
@@ -387,7 +385,11 @@ const BlogPage = () => {
                       >
                         <Link
                           href={`/blog?categoryId=${category.id}`}
-                          className="flex-1 text-sm text-secondary hover:text-action transition-colors"
+                          className={`flex-1 text-sm transition-colors ${
+                            selectedCategoryId === category.id 
+                              ? 'text-action font-semibold' 
+                              : 'text-secondary hover:text-action'
+                          }`}
                         >
                           {category.name}
                         </Link>
@@ -484,7 +486,7 @@ const BlogPage = () => {
         }}
         onConfirm={handleDeleteConfirm}
         title={selectedPost?.title || ''}
-        isDeleting={isDeleting}
+        isDeleting={deletePostMutation.isPending}
       />
       <EditCategoryModal
         isOpen={isEditCategoryModalOpen}
@@ -503,7 +505,7 @@ const BlogPage = () => {
         }}
         onConfirm={handleDeleteCategoryConfirm}
         title={selectedCategory?.name || ''}
-        isDeleting={isDeletingCategory}
+        isDeleting={deleteCategoryMutation.isPending}
         type="category"
       />
     </>

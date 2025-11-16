@@ -3,8 +3,8 @@ import { writeFile, mkdir } from 'fs/promises'
 import { join } from 'path'
 import { existsSync } from 'fs'
 
-// Maximum file size: 5MB
-const MAX_FILE_SIZE = 5 * 1024 * 1024
+// Maximum file size: 20MB
+const MAX_FILE_SIZE = 20 * 1024 * 1024
 const ALLOWED_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif']
 
 export async function POST(request: NextRequest) {
@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
     // Validate file size
     if (file.size > MAX_FILE_SIZE) {
       return NextResponse.json(
-        { error: 'File size exceeds 5MB limit' },
+        { error: 'File size exceeds 20MB limit' },
         { status: 400 }
       )
     }
