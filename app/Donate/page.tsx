@@ -89,20 +89,20 @@ const DonatePage = () => {
                 </h3>
                 <div className="space-y-3 text-sm">
                   <div>
-                    <span className="font-semibold text-brand">Bank Name:</span>
-                    <p className="text-secondary mt-1">[Bank Name]</p>
+                    <span className="font-semibold text-brand">I&M BANK (RWF):</span>
+                    <p className="text-secondary font-mono mt-1">20018523001</p>
                   </div>
                   <div>
-                    <span className="font-semibold text-brand">Account Name:</span>
-                    <p className="text-secondary mt-1">GBUR / gbur Rwanda</p>
+                    <span className="font-semibold text-brand">I&M BANK (USA):</span>
+                    <p className="text-secondary font-mono mt-1">20009542001</p>
                   </div>
                   <div>
-                    <span className="font-semibold text-brand">Account Number:</span>
-                    <p className="text-secondary font-mono mt-1">[Account Number]</p>
+                    <span className="font-semibold text-brand">KCB (BPR):</span>
+                    <p className="text-secondary font-mono mt-1">4400851281</p>
                   </div>
                   <div>
-                    <span className="font-semibold text-brand">SWIFT Code:</span>
-                    <p className="text-secondary font-mono mt-1">[SWIFT Code]</p>
+                    <span className="font-semibold text-brand">BK:</span>
+                    <p className="text-secondary font-mono mt-1">0004 0003 8074 250</p>
                   </div>
                 </div>
               </div>
@@ -119,16 +119,8 @@ const DonatePage = () => {
                 </h3>
                 <div className="space-y-3 text-sm">
                   <div>
-                    <span className="font-semibold text-brand">MTN Mobile Money:</span>
-                    <p className="text-secondary font-mono mt-1">[MTN Number]</p>
-                  </div>
-                  <div>
-                    <span className="font-semibold text-brand">Airtel Money:</span>
-                    <p className="text-secondary font-mono mt-1">[Airtel Number]</p>
-                  </div>
-                  <div>
-                    <span className="font-semibold text-brand">Tigo Cash:</span>
-                    <p className="text-secondary font-mono mt-1">[Tigo Number]</p>
+                    <span className="font-semibold text-brand">MoMo Code:</span>
+                    <p className="text-secondary font-mono mt-1">028038</p>
                   </div>
                   <div className="pt-2">
                     <span className="font-semibold text-brand">Account Name:</span>

@@ -7,7 +7,7 @@ import Footer from '../components/footer'
 import FloatingActionButton from '../components/FloatingActionButton'
 
 // Safe Image Component with error handling
-const SafeImage = ({ src, alt, onError, ...props }: { src: string; alt: string; onError?: () => void; [key: string]: any }) => {
+const SafeImage = ({ src, alt, onError, ...props }: { src: string; alt: string; onError?: () => void;[key: string]: any }) => {
   const [imgError, setImgError] = useState(false)
   const [imgSrc, setImgSrc] = useState(src)
 
@@ -192,10 +192,10 @@ const ConferencePage = () => {
   }
 
   const years = Object.keys(conferencesBaseData).sort().reverse()
-  
+
   // Convert Set to Array for dependency tracking
   const failedImagesArray = Array.from(failedImages)
-  
+
   // Memoize current conference to update when year or failed images change
   const currentConference = useMemo(() => {
     const base = conferencesBaseData[activeYear as keyof typeof conferencesBaseData]
@@ -204,7 +204,7 @@ const ConferencePage = () => {
       images: base.images.filter(img => !failedImages.has(img)),
     }
   }, [activeYear, failedImagesArray])
-  
+
   const validImages = currentConference.images
   const showAll = showAllImages[activeYear] || false
   const displayedImages = showAll ? validImages : validImages.slice(0, 4)
@@ -230,7 +230,7 @@ const ConferencePage = () => {
                 </p>
               </div>
             </div>
-            
+
             {/* Year Filter Tabs */}
             <div className="flex flex-wrap justify-center gap-3 md:gap-4 mb-8">
               {years.map((year) => (
@@ -239,17 +239,16 @@ const ConferencePage = () => {
                   onClick={() => {
                     setActiveYear(year)
                   }}
-                  className={`px-6 py-3 rounded-full font-semibold text-sm md:text-base transition-all duration-300 ${
-                    activeYear === year
+                  className={`px-6 py-3 rounded-full font-semibold text-sm md:text-base transition-all duration-300 ${activeYear === year
                       ? 'bg-action text-white shadow-lg scale-105'
                       : 'bg-accent text-secondary hover:bg-main hover:text-action'
-                  }`}
+                    }`}
                 >
                   Ezra {year}
                 </button>
               ))}
             </div>
-            
+
             {/* Hero Image */}
             <div key={`hero-${activeYear}`} className="relative w-full h-64 md:h-80 lg:h-96 rounded-xl overflow-hidden shadow-custom">
               <SafeImage
@@ -383,7 +382,7 @@ const ConferencePage = () => {
                     />
                     <div className="absolute inset-0 bg-black/40 flex items-center justify-center group hover:bg-black/50 transition-colors">
                       <svg className="w-16 h-16 text-white group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M8 5v14l11-7z"/>
+                        <path d="M8 5v14l11-7z" />
                       </svg>
                     </div>
                   </div>
@@ -396,7 +395,7 @@ const ConferencePage = () => {
           </div>
         </section>
 
-            {/* Image Gallery Section */}
+        {/* Image Gallery Section */}
         <section key={`gallery-${activeYear}`} className={`py-12 md:py-16 ${activeYear === '2025' ? 'bg-gradient-to-b from-main to-accent' : 'bg-accent'}`}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
@@ -436,7 +435,7 @@ const ConferencePage = () => {
                 <p className="text-secondary text-lg">No images available at the moment.</p>
               </div>
             )}
-            
+
             {/* Show All Button */}
             {hasMoreImages && (
               <div className="text-center mt-10">
@@ -461,8 +460,8 @@ const ConferencePage = () => {
                   )}
                 </button>
                 <p className="text-secondary text-sm md:text-base mt-4">
-                  {showAll 
-                    ? `Showing all ${validImages.length} photos` 
+                  {showAll
+                    ? `Showing all ${validImages.length} photos`
                     : `Showing 4 of ${validImages.length} photos - Click to view all`
                   }
                 </p>
@@ -483,7 +482,7 @@ const ConferencePage = () => {
               </p>
               <div className="space-y-2 text-secondary">
                 <p><strong>Email:</strong> <a href="mailto:ugbroffice@gmail.com" className="text-action hover:text-link-hover">ugbroffice@gmail.com</a></p>
-                <p><strong>Website:</strong> <a href="https://gburwanda.org" target="_blank" rel="noopener noreferrer" className="text-action hover:text-link-hover">gburwanda.org</a></p>
+                <p><strong>Website:</strong> <a href="https://gburwanda.com" target="_blank" rel="noopener noreferrer" className="text-action hover:text-link-hover">gburwanda.com</a></p>
               </div>
             </div>
           </div>
