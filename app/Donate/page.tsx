@@ -56,15 +56,15 @@ const DonatePage = () => {
                 Support GBUR
               </h1>
               <p className="text-secondary text-base md:text-lg max-w-3xl mx-auto leading-relaxed">
-                Your generous support helps us reach every corner of every campus. 
+                Your generous support helps us reach every corner of every campus.
                 Together, we can transform Rwanda's universities through gospel-centered communities.
               </p>
             </div>
           </div>
         </section>
 
-             {/* Payment Methods Section */}
-             <section className="py-8 md:py-12 bg-accent">
+        {/* Payment Methods Section */}
+        <section className="py-8 md:py-12 bg-accent">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-8 md:mb-10">
               <h2 className="text-2xl md:text-3xl font-bold text-action mb-3">
@@ -94,7 +94,7 @@ const DonatePage = () => {
                   </div>
                   <div>
                     <span className="font-semibold text-brand">Account Name:</span>
-                    <p className="text-secondary mt-1">GBUR / InterVarsity Rwanda</p>
+                    <p className="text-secondary mt-1">GBUR / gbur Rwanda</p>
                   </div>
                   <div>
                     <span className="font-semibold text-brand">Account Number:</span>
@@ -132,7 +132,7 @@ const DonatePage = () => {
                   </div>
                   <div className="pt-2">
                     <span className="font-semibold text-brand">Account Name:</span>
-                    <p className="text-secondary mt-1">GBUR / InterVarsity Rwanda</p>
+                    <p className="text-secondary mt-1">GBUR</p>
                   </div>
                 </div>
               </div>
@@ -150,7 +150,7 @@ const DonatePage = () => {
                 <div className="space-y-3 text-sm">
                   <div>
                     <span className="font-semibold text-brand">Receiver Name:</span>
-                    <p className="text-secondary mt-1">GBUR / InterVarsity Rwanda</p>
+                    <p className="text-secondary mt-1">GBUR</p>
                   </div>
                   <div>
                     <span className="font-semibold text-brand">Country:</span>
@@ -178,7 +178,7 @@ const DonatePage = () => {
               </button>
             </div>
 
-        
+
           </div>
         </section>
 
@@ -191,7 +191,7 @@ const DonatePage = () => {
               </h2>
               <div className="space-y-4 text-secondary text-base md:text-lg leading-relaxed">
                 <p>
-                  GBUR wants every student and faculty member to have a chance to hear about Jesus. 
+                  GBUR wants every student and faculty member to have a chance to hear about Jesus.
                   Your gift helps make that possible by supporting:
                 </p>
                 <ul className="space-y-3 ml-6 list-disc">
@@ -207,22 +207,22 @@ const DonatePage = () => {
               </div>
             </div>
           </div>
-              {/* Additional Information */}
-              <div className="mt-8 pt-6 border-t border-custom">
-              <p className="text-sm text-secondary text-center italic">
-                For more information about giving or to set up recurring donations, please{' '}
-                <Link href="/contact" className="text-action hover:text-link-hover font-semibold">
-                  contact us
-                </Link>
-                .
-              </p>
-            </div>
+          {/* Additional Information */}
+          <div className="mt-8 pt-6 border-t border-custom">
+            <p className="text-sm text-secondary text-center italic">
+              For more information about giving or to set up recurring donations, please{' '}
+              <Link href="/contact" className="text-action hover:text-link-hover font-semibold">
+                contact us
+              </Link>
+              .
+            </p>
+          </div>
         </section>
 
         {/* Giving Options Section */}
- 
 
-   
+
+
       </main>
       <FloatingActionButton />
       <Footer />

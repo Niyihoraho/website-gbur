@@ -45,7 +45,7 @@ const OurPurposePage = () => {
             {/* Purpose Statement */}
             <div className="space-y-3 text-secondary text-base md:text-lg leading-relaxed">
               <p>
-                The purpose of InterVarsity Christian Fellowship/USA
+                The purpose of gbur Christian Fellowship/USA
               </p>
               <p>
                 is to establish and advance
@@ -125,7 +125,7 @@ const OurPurposePage = () => {
                   </div>
                   <div>
                     <span className="font-semibold text-brand">Account Name:</span>
-                    <p className="text-secondary mt-1">GBUR / InterVarsity Rwanda</p>
+                    <p className="text-secondary mt-1">GBUR / gbur Rwanda</p>
                   </div>
                   <div>
                     <span className="font-semibold text-brand">Account Number:</span>
@@ -163,7 +163,7 @@ const OurPurposePage = () => {
                   </div>
                   <div className="pt-2">
                     <span className="font-semibold text-brand">Account Name:</span>
-                    <p className="text-secondary mt-1">GBUR / InterVarsity Rwanda</p>
+                    <p className="text-secondary mt-1">GBUR / gbur Rwanda</p>
                   </div>
                 </div>
               </div>
@@ -181,7 +181,7 @@ const OurPurposePage = () => {
                 <div className="space-y-3 text-sm">
                   <div>
                     <span className="font-semibold text-brand">Receiver Name:</span>
-                    <p className="text-secondary mt-1">GBUR / InterVarsity Rwanda</p>
+                    <p className="text-secondary mt-1">GBUR / gbur Rwanda</p>
                   </div>
                   <div>
                     <span className="font-semibold text-brand">Country:</span>
