@@ -48,50 +48,45 @@ const Navbar = () => {
         ></div>
         {/* Light Overlay */}
         <div className="absolute inset-0 navbar-overlay"></div>
-        
+
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-12">
             <div className="flex justify-center items-center space-x-4 lg:space-x-8 flex-1 overflow-x-auto">
               <Link
                 href="/whatWeBelieve"
-                className={`link-color hover:text-muted text-xs font-semibold transition-colors pb-1 whitespace-nowrap ${
-                  pathname === '/whatWeBelieve' ? 'border-b-2 border-action' : 'border-b-2 border-transparent hover:border-link-hover'
-                }`}
+                className={`link-color hover:text-muted text-xs font-semibold transition-colors pb-1 whitespace-nowrap ${pathname === '/whatWeBelieve' ? 'border-b-2 border-action' : 'border-b-2 border-transparent hover:border-link-hover'
+                  }`}
               >
                 WHAT WE BELIEVE
               </Link>
               <div className="border-r-[1.5px] border-custom h-7"></div>
               <Link
                 href="/ifes"
-                className={`link-color hover:text-muted text-xs font-semibold transition-colors pb-1 whitespace-nowrap ${
-                  pathname === '/ifes' ? 'border-b-2 border-action' : 'border-b-2 border-transparent hover:border-link-hover'
-                }`}
+                className={`link-color hover:text-muted text-xs font-semibold transition-colors pb-1 whitespace-nowrap ${pathname === '/ifes' ? 'border-b-2 border-action' : 'border-b-2 border-transparent hover:border-link-hover'
+                  }`}
               >
                 GBUR/IFES History
               </Link>
               <Link
                 href="/conference"
-                className={`link-color hover:text-muted text-xs font-semibold transition-colors pb-1 whitespace-nowrap ${
-                  pathname === '/conference' ? 'border-b-2 border-action' : 'border-b-2 border-transparent hover:border-link-hover'
-                }`}
+                className={`link-color hover:text-muted text-xs font-semibold transition-colors pb-1 whitespace-nowrap ${pathname === '/conference' ? 'border-b-2 border-action' : 'border-b-2 border-transparent hover:border-link-hover'
+                  }`}
               >
                 CONFERENCE
               </Link>
 
               <Link
                 href="/lifeInMinistry"
-                className={`link-color hover:text-muted text-xs font-semibold transition-colors pb-1 whitespace-nowrap ${
-                  pathname === '/lifeInMinistry' ? 'border-b-2 border-action' : 'border-b-2 border-transparent hover:border-link-hover'
-                }`}
+                className={`link-color hover:text-muted text-xs font-semibold transition-colors pb-1 whitespace-nowrap ${pathname === '/lifeInMinistry' ? 'border-b-2 border-action' : 'border-b-2 border-transparent hover:border-link-hover'
+                  }`}
               >
                 LIFE IN MINISTRY
               </Link>
 
               <Link
                 href="/contact"
-                className={`link-color hover:text-muted text-xs font-semibold transition-colors pb-1 whitespace-nowrap ${
-                  pathname === '/contact' ? 'border-b-2 border-action' : 'border-b-2 border-transparent hover:border-link-hover'
-                }`}
+                className={`link-color hover:text-muted text-xs font-semibold transition-colors pb-1 whitespace-nowrap ${pathname === '/contact' ? 'border-b-2 border-action' : 'border-b-2 border-transparent hover:border-link-hover'
+                  }`}
               >
                 CONTACT US
               </Link>
@@ -109,20 +104,20 @@ const Navbar = () => {
         ></div>
         {/* Light Overlay */}
         <div className="absolute inset-0 navbar-overlay"></div>
-        
+
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-14 md:h-16">
             {/* Logo */}
             <div className="flex items-center">
               <Link href="/" className="flex-shrink-0 flex items-center" onClick={closeMobileMenu}>
                 <div
-                  className="w-[100px] sm:w-[120px] h-8 sm:h-10 rounded-md border-custom flex items-center justify-center mr-2 sm:mr-3"
+                  className="w-[120px] sm:w-[140px] h-10 sm:h-12 rounded-md border-custom flex items-center justify-center mr-2 sm:mr-3"
                 >
-                  <Image 
-                    src="/Gbur/logo-r.png" 
-                    alt="GBUR Logo" 
-                    width={120} 
-                    height={40}
+                  <Image
+                    src="/logo2.jpg"
+                    alt="GBUR Logo"
+                    width={140}
+                    height={48}
                     className="object-contain"
                   />
                 </div>
@@ -134,41 +129,36 @@ const Navbar = () => {
               <div className="ml-10 h-10 flex items-baseline space-x-6 xl:space-x-8">
                 <Link
                   href="/"
-                  className={`text-primary link-color font-bold text-sm tracking-wide transition-colors pb-1 ${
-                    pathname === '/' ? 'border-b-2 border-action' : 'border-b-2 border-transparent hover:border-link-hover'
-                  }`}
+                  className={`text-primary link-color font-bold text-sm tracking-wide transition-colors pb-1 ${pathname === '/' ? 'border-b-2 border-action' : 'border-b-2 border-transparent hover:border-link-hover'
+                    }`}
                 >
                   ABOUT US
                 </Link>
                 <Link
                   href="/OurMinistry"
-                  className={`text-primary link-color font-bold text-sm tracking-wide transition-colors pb-1 ${
-                    pathname === '/OurMinistry' ? 'border-b-2 border-action' : 'border-b-2 border-transparent hover:border-link-hover'
-                  }`}
+                  className={`text-primary link-color font-bold text-sm tracking-wide transition-colors pb-1 ${pathname === '/OurMinistry' ? 'border-b-2 border-action' : 'border-b-2 border-transparent hover:border-link-hover'
+                    }`}
                 >
                   OUR MINISTRY
                 </Link>
                 <Link
                   href="/blog"
-                  className={`text-primary link-color font-bold text-sm tracking-wide transition-colors pb-1 ${
-                    pathname === '/blog' ? 'border-b-2 border-action' : 'border-b-2 border-transparent hover:border-link-hover'
-                  }`}
+                  className={`text-primary link-color font-bold text-sm tracking-wide transition-colors pb-1 ${pathname === '/blog' ? 'border-b-2 border-action' : 'border-b-2 border-transparent hover:border-link-hover'
+                    }`}
                 >
                   BLOG
                 </Link>
                 <Link
                   href="/compus"
-                  className={`text-primary link-color font-bold text-sm tracking-wide transition-colors pb-1 ${
-                    pathname === '/compus' ? 'border-b-2 border-action' : 'border-b-2 border-transparent hover:border-link-hover'
-                  }`}
+                  className={`text-primary link-color font-bold text-sm tracking-wide transition-colors pb-1 ${pathname === '/compus' ? 'border-b-2 border-action' : 'border-b-2 border-transparent hover:border-link-hover'
+                    }`}
                 >
                   CAMPUS
                 </Link>
                 <Link
                   href="/graduate"
-                  className={`text-primary link-color font-bold text-sm tracking-wide transition-colors pb-1 ${
-                    pathname === '/graduate' ? 'border-b-2 border-action' : 'border-b-2 border-transparent hover:border-link-hover'
-                  }`}
+                  className={`text-primary link-color font-bold text-sm tracking-wide transition-colors pb-1 ${pathname === '/graduate' ? 'border-b-2 border-action' : 'border-b-2 border-transparent hover:border-link-hover'
+                    }`}
                 >
                   GRADUATE
                 </Link>
@@ -230,9 +220,8 @@ const Navbar = () => {
 
         {/* Mobile Menu Dropdown */}
         <div
-          className={`lg:hidden relative z-10 bg-main border-t border-custom transition-all duration-300 ease-in-out overflow-hidden ${
-            isMobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
-          }`}
+          className={`lg:hidden relative z-10 bg-main border-t border-custom transition-all duration-300 ease-in-out overflow-hidden ${isMobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
+            }`}
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             {/* Mobile Top Nav Links */}
@@ -240,45 +229,40 @@ const Navbar = () => {
               <Link
                 href="/whatWeBelieve"
                 onClick={closeMobileMenu}
-                className={`block link-color hover:text-muted text-sm font-semibold transition-colors py-2 ${
-                  pathname === '/whatWeBelieve' ? 'text-action border-l-4 border-action pl-3' : 'pl-3'
-                }`}
+                className={`block link-color hover:text-muted text-sm font-semibold transition-colors py-2 ${pathname === '/whatWeBelieve' ? 'text-action border-l-4 border-action pl-3' : 'pl-3'
+                  }`}
               >
                 WHAT WE BELIEVE
               </Link>
               <Link
                 href="/ifes"
                 onClick={closeMobileMenu}
-                className={`block link-color hover:text-muted text-sm font-semibold transition-colors py-2 ${
-                  pathname === '/ifes' ? 'text-action border-l-4 border-action pl-3' : 'pl-3'
-                }`}
+                className={`block link-color hover:text-muted text-sm font-semibold transition-colors py-2 ${pathname === '/ifes' ? 'text-action border-l-4 border-action pl-3' : 'pl-3'
+                  }`}
               >
                 GBUR/IFES History
               </Link>
               <Link
                 href="/conference"
                 onClick={closeMobileMenu}
-                className={`block link-color hover:text-muted text-sm font-semibold transition-colors py-2 ${
-                  pathname === '/conference' ? 'text-action border-l-4 border-action pl-3' : 'pl-3'
-                }`}
+                className={`block link-color hover:text-muted text-sm font-semibold transition-colors py-2 ${pathname === '/conference' ? 'text-action border-l-4 border-action pl-3' : 'pl-3'
+                  }`}
               >
                 CONFERENCE
               </Link>
               <Link
                 href="/lifeInMinistry"
                 onClick={closeMobileMenu}
-                className={`block link-color hover:text-muted text-sm font-semibold transition-colors py-2 ${
-                  pathname === '/lifeInMinistry' ? 'text-action border-l-4 border-action pl-3' : 'pl-3'
-                }`}
+                className={`block link-color hover:text-muted text-sm font-semibold transition-colors py-2 ${pathname === '/lifeInMinistry' ? 'text-action border-l-4 border-action pl-3' : 'pl-3'
+                  }`}
               >
                 LIFE IN MINISTRY
               </Link>
               <Link
                 href="/contact"
                 onClick={closeMobileMenu}
-                className={`block link-color hover:text-muted text-sm font-semibold transition-colors py-2 ${
-                  pathname === '/contact' ? 'text-action border-l-4 border-action pl-3' : 'pl-3'
-                }`}
+                className={`block link-color hover:text-muted text-sm font-semibold transition-colors py-2 ${pathname === '/contact' ? 'text-action border-l-4 border-action pl-3' : 'pl-3'
+                  }`}
               >
                 CONTACT US
               </Link>
@@ -289,45 +273,40 @@ const Navbar = () => {
               <Link
                 href="/"
                 onClick={closeMobileMenu}
-                className={`block text-primary link-color font-bold text-base transition-colors py-2 ${
-                  pathname === '/' ? 'text-action border-l-4 border-action pl-3' : 'pl-3'
-                }`}
+                className={`block text-primary link-color font-bold text-base transition-colors py-2 ${pathname === '/' ? 'text-action border-l-4 border-action pl-3' : 'pl-3'
+                  }`}
               >
                 ABOUT US
               </Link>
               <Link
                 href="/OurMinistry"
                 onClick={closeMobileMenu}
-                className={`block text-primary link-color font-bold text-base transition-colors py-2 ${
-                  pathname === '/OurMinistry' ? 'text-action border-l-4 border-action pl-3' : 'pl-3'
-                }`}
+                className={`block text-primary link-color font-bold text-base transition-colors py-2 ${pathname === '/OurMinistry' ? 'text-action border-l-4 border-action pl-3' : 'pl-3'
+                  }`}
               >
                 OUR MINISTRY
               </Link>
               <Link
                 href="/blog"
                 onClick={closeMobileMenu}
-                className={`block text-primary link-color font-bold text-base transition-colors py-2 ${
-                  pathname === '/blog' ? 'text-action border-l-4 border-action pl-3' : 'pl-3'
-                }`}
+                className={`block text-primary link-color font-bold text-base transition-colors py-2 ${pathname === '/blog' ? 'text-action border-l-4 border-action pl-3' : 'pl-3'
+                  }`}
               >
                 BLOG
               </Link>
               <Link
                 href="/compus"
                 onClick={closeMobileMenu}
-                className={`block text-primary link-color font-bold text-base transition-colors py-2 ${
-                  pathname === '/compus' ? 'text-action border-l-4 border-action pl-3' : 'pl-3'
-                }`}
+                className={`block text-primary link-color font-bold text-base transition-colors py-2 ${pathname === '/compus' ? 'text-action border-l-4 border-action pl-3' : 'pl-3'
+                  }`}
               >
                 CAMPUS
               </Link>
               <Link
                 href="/graduate"
                 onClick={closeMobileMenu}
-                className={`block text-primary link-color font-bold text-base transition-colors py-2 ${
-                  pathname === '/graduate' ? 'text-action border-l-4 border-action pl-3' : 'pl-3'
-                }`}
+                className={`block text-primary link-color font-bold text-base transition-colors py-2 ${pathname === '/graduate' ? 'text-action border-l-4 border-action pl-3' : 'pl-3'
+                  }`}
               >
                 GRADUATE
               </Link>
@@ -348,12 +327,12 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
-    
-    {/* Subscribe Modal */}
-    <SubscribeModal
-      isOpen={isSubscribeModalOpen}
-      onClose={() => setIsSubscribeModalOpen(false)}
-    />
+
+      {/* Subscribe Modal */}
+      <SubscribeModal
+        isOpen={isSubscribeModalOpen}
+        onClose={() => setIsSubscribeModalOpen(false)}
+      />
     </div>
   )
 }

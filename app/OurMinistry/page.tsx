@@ -50,7 +50,7 @@ const OurMinistryPage = () => {
           />
         </svg>
       ),
-      image: "/Gbur/DSC_9909.jpg",
+      image: "/Gbur/university.png",
     },
     {
       label: "Colleges",
@@ -71,7 +71,7 @@ const OurMinistryPage = () => {
           />
         </svg>
       ),
-      image: "/Gbur/DSC_9816.jpg",
+      image: "/Gbur/college.jpg",
     },
     {
       label: "Staff Members",
@@ -92,7 +92,7 @@ const OurMinistryPage = () => {
           />
         </svg>
       ),
-      image: "/Gbur/DSC_9781.jpg",
+      image: "/Gbur/staffs.png",
     },
   ];
 
@@ -297,7 +297,7 @@ const OurMinistryPage = () => {
       <Navbar />
       <main className="bg-accent">
         {/* Hero Section */}
-   
+
 
         {/* Statistics Section with Images */}
         <section className="py-12 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">

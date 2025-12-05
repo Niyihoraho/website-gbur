@@ -17,13 +17,7 @@ const LeadersPage = () => {
       role: 'Student Ministry',
       image: '/leaders/Alex shyaka-student ministry.jpg',
       description: 'Passionately serving students and equipping them to be mature disciples of Jesus Christ.',
-    },
-    {
-      name: 'Murenzi Suzan',
-      role: 'Accountant',
-      image: '/leaders/Murenzi suzan-accountant.png',
-      description: 'Ensuring financial integrity and stewardship of resources for effective ministry operations.',
-    },
+    }
   ]
 
   return (
@@ -38,7 +32,7 @@ const LeadersPage = () => {
                 Our Leadership
               </h1>
               <p className="text-secondary text-base md:text-lg max-w-3xl mx-auto leading-relaxed">
-                Meet the dedicated leaders who guide GBUR in its mission to reach, equip, and mobilize 
+                Meet the dedicated leaders who guide GBUR in its mission to reach, equip, and mobilize
                 students and graduates to be agents of godly transformation in Rwanda and beyond.
               </p>
             </div>
@@ -94,15 +88,15 @@ const LeadersPage = () => {
               </h2>
               <div className="space-y-4 text-secondary text-base md:text-lg leading-relaxed">
                 <p>
-                  Our leadership team is committed to serving GBUR with excellence, integrity, and a 
-                  passion for seeing students transformed by the gospel. Each leader brings unique 
-                  gifts and experiences that contribute to our mission of reaching every student, 
+                  Our leadership team is committed to serving GBUR with excellence, integrity, and a
+                  passion for seeing students transformed by the gospel. Each leader brings unique
+                  gifts and experiences that contribute to our mission of reaching every student,
                   equipping them as disciples, and mobilizing them for godly transformation.
                 </p>
                 <p>
-                  Together, we work to create vibrant Christian communities on campuses across Rwanda, 
-                  ensuring that every student has the opportunity to hear the gospel and grow in their 
-                  faith. Our leadership is dedicated to supporting student leaders, facilitating 
+                  Together, we work to create vibrant Christian communities on campuses across Rwanda,
+                  ensuring that every student has the opportunity to hear the gospel and grow in their
+                  faith. Our leadership is dedicated to supporting student leaders, facilitating
                   discipleship, and building partnerships that advance God's kingdom in higher education.
                 </p>
               </div>
