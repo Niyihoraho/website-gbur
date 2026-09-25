@@ -163,3 +163,18 @@ enum MessageStatus {
   replied
   archived
 }
+
+// Staff Card Verification & Registration
+model StaffCard {
+  id                   String    @id
+  firstName            String    @map("first_name")
+  lastName             String    @map("last_name")
+  position             String?
+  department           String?
+  workField            String?   @map("work_field")
+  universitiesInCharge String[]  @map("universities_in_charge")
+  validity             DateTime? @db.Date
+  imageUrl             String?   @map("image_url")
+
+  @@map("staff_card")
+}

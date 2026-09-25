@@ -11,6 +11,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://www.gburwanda.com'),
   title: "GBUR - Groupe Biblique Universitaire du Rwanda",
   description: "To see every student and graduate as an agent of Godly transformation in church and society. Join our campus ministry community.",
 };

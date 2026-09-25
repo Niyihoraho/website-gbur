@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#082C5E">
+    <title>GBUR Staff Card Registration</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --gbur-navy: #082C5E;
+            --gbur-navy-dark: #051D40;
+            --gbur-navy-light: #0D3F85;
+            --gbur-cyan: #5DAAE0;
+            --gbur-cyan-light: #EBF5FC;
+            --gbur-cyan-border: #B3D8F2;
+            --bg-page: #F8FAFC;
+            --white: #FFFFFF;
+            --text-main: #0F172A;
+            --text-muted: #475569;
+            --border-card: #E2E8F0;
+            --border-divider: #F1F5F9;
+            --status-green: #15803D;
+            --status-green-bg: #F0FDF4;
+            --status-green-border: #DCFCE7;
+            --status-red: #B91C1C;
+            --status-red-bg: #FEF2F2;
+            --status-red-border: #FECACA;
+            --radius-xs: 4px;
+            --radius-sm: 6px;
+            --radius-md: 8px;
+            --radius-lg: 10px;
+            --shadow-card: 0 20px 35px -10px rgba(8, 44, 94, 0.09), 0 4px 12px -2px rgba(8, 44, 94, 0.04);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { min-height: 100%; font-size: 16px; -webkit-text-size-adjust: 100%; }
+        
+        body {
+            min-height: 100vh;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: var(--text-main);
+            background-color: var(--bg-page);
+            background-image: radial-gradient(circle at 50% 0%, rgba(93, 170, 224, 0.12) 0%, transparent 65%), linear-gradient(to bottom, #F8FAFC 0%, #EFF4F9 100%);
+            padding: clamp(16px, 3vw, 40px) clamp(12px, 3vw, 24px);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .brand-header {
+            text-align: center;
+            margin-bottom: clamp(20px, 4vw, 32px);
+        }
+        .brand-logo-wrapper { display: flex; justify-content: center; align-items: center; margin-bottom: 4px; }
+        .brand-logo { width: 72px; height: 72px; object-fit: contain; filter: drop-shadow(0 4px 8px rgba(8, 44, 94, 0.08)); }
+        .brand-name { color: var(--gbur-navy); font-size: clamp(14px, 2.5vw, 16px); font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; line-height: 1.35; }
+        .brand-subtitle { margin-top: 4px; color: var(--text-muted); font-size: clamp(12px, 2vw, 13.5px); font-weight: 600; letter-spacing: 0.04em; }
+
+        .workspace {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(20px, 3.5vw, 36px);
+            align-items: start;
+        }
+
+        .form-card {
+            background: var(--white);
+            border: 1px solid var(--border-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+            padding: clamp(20px, 3.5vw, 28px);
+        }
+        .section-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--gbur-navy);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .section-title::before {
+            content: "";
+            width: 4px;
+            height: 18px;
+            background: var(--gbur-cyan);
+            border-radius: 2px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-group.full { grid-column: span 2; }
+
+        label {
+            font-size: 11.5px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border-card);
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 13.5px;
+            color: var(--text-main);
+            background: var(--bg-page);
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        input:focus, select:focus {
+            border-color: var(--gbur-cyan);
+            background: var(--white);
+            box-shadow: 0 0 0 3px rgba(93, 170, 224, 0.2);
+        }
+        input:read-only {
+            background-color: #E2E8F0;
+            color: var(--text-muted);
+            cursor: not-allowed;
+            border-color: #CBD5E1;
+        }
+
+        .university-tag-container {
+            border: 1px solid var(--border-card);
+            border-radius: var(--radius-sm);
+            background: var(--bg-page);
+            padding: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            min-height: 44px;
+        }
+        .tag-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--gbur-cyan-light);
+            border: 1px solid var(--gbur-cyan-border);
+            color: var(--gbur-navy);
+            padding: 4px 8px;
+            border-radius: var(--radius-xs);
+            font-size: 11.5px;
+            font-weight: 600;
+        }
+        .tag-chip-remove {
+            cursor: pointer;
+            color: var(--text-muted);
+            font-weight: 800;
+            font-size: 12px;
+        }
+        .tag-chip-remove:hover { color: var(--status-red); }
+        .tag-input {
+            border: none;
+            outline: none;
+            background: transparent;
+            padding: 4px;
+            font-size: 13px;
+            flex: 1;
+            min-width: 120px;
+        }
+        .tag-input:focus { box-shadow: none; }
+
+        .quick-presets {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: 8px;
+        }
+        .preset-title {
+            font-size: 10.5px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+        .preset-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            max-height: 110px;
+            overflow-y: auto;
+            padding: 2px;
+        }
+        .preset-btn {
+            background: var(--white);
+            border: 1px solid var(--border-card);
+            color: var(--text-main);
+            padding: 3px 8px;
+            border-radius: var(--radius-xs);
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .preset-btn:hover { border-color: var(--gbur-cyan); background: var(--gbur-cyan-light); color: var(--gbur-navy); }
+
+        .btn-submit {
+            grid-column: span 2;
+            margin-top: 8px;
+            background: linear-gradient(135deg, var(--gbur-navy-dark) 0%, var(--gbur-navy) 100%);
+            color: var(--white);
+            border: none;
+            padding: 14px;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(8, 44, 94, 0.2);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        .btn-submit:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(8, 44, 94, 0.3);
+        }
+
+        .preview-sidebar {
+            position: sticky;
+            top: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .preview-badge-label {
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--gbur-navy);
+            background: var(--gbur-cyan-light);
+            border: 1px solid var(--gbur-cyan-border);
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+        }
+
+        .verification-card { width: 100%; max-width: 440px; background: var(--white); border: 1px solid var(--border-card); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-card); }
+        .verification-header { padding: 20px 20px; color: var(--white); background: linear-gradient(135deg, var(--gbur-navy-dark) 0%, var(--gbur-navy) 60%, var(--gbur-navy-light) 100%); text-align: center; position: relative; overflow: hidden; }
+        .verification-header::after { content: ""; position: absolute; top: -50%; right: -25%; width: 220px; height: 220px; background: radial-gradient(circle, rgba(93, 170, 224, 0.18) 0%, transparent 70%); pointer-events: none; }
+        .badge-wrapper { display: flex; justify-content: center; align-items: center; margin-bottom: 8px; }
+        .verified-badge-icon { width: 44px; height: 44px; filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.18)); }
+        .verification-title { font-size: 17px; line-height: 1.25; font-weight: 800; letter-spacing: -0.01em; }
+        .verification-description { max-width: 320px; margin: 4px auto 0; color: rgba(255, 255, 255, 0.88); font-size: 11.5px; line-height: 1.4; }
+        .cyan-line { height: 3px; background: linear-gradient(90deg, var(--gbur-navy) 0%, var(--gbur-cyan) 50%, var(--gbur-navy) 100%); width: 100%; }
+        .staff-profile { padding: 14px 18px; background: var(--gbur-cyan-light); border-bottom: 1px solid var(--gbur-cyan-border); display: flex; align-items: center; gap: 14px; }
+        .profile-avatar { width: 48px; height: 48px; border-radius: var(--radius-md); background: var(--gbur-navy); color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; border: 2px solid var(--gbur-cyan); box-shadow: 0 3px 8px rgba(8, 44, 94, 0.15); flex-shrink: 0; }
+        .profile-info { flex: 1; min-width: 0; }
+        .staff-name { color: var(--gbur-navy); font-size: 17px; line-height: 1.25; font-weight: 800; letter-spacing: -0.01em; word-break: break-word; }
+        .staff-position { margin-top: 4px; display: inline-flex; align-items: center; gap: 5px; padding: 2px 8px; background: var(--white); color: var(--gbur-navy); border: 1px solid var(--gbur-cyan-border); border-radius: var(--radius-xs); font-size: 11px; font-weight: 700; }
+        .staff-details { padding: 6px 18px 14px; }
+        .detail-row { display: flex; align-items: center; justify-content: space-between; min-height: 38px; padding: 8px 0; border-bottom: 1px solid var(--border-divider); gap: 12px; }
+        .detail-row:last-child { border-bottom: none; }
+        .detail-label { color: var(--text-muted); font-size: 10.5px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; flex-shrink: 0; max-width: 45%; }
+        .detail-value { min-width: 0; color: var(--text-main); font-size: 12.5px; font-weight: 600; line-height: 1.4; text-align: right; overflow-wrap: anywhere; }
+        .staff-id { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; color: var(--gbur-navy); font-weight: 800; background: var(--gbur-cyan-light); padding: 2px 6px; border-radius: var(--radius-xs); border: 1px solid var(--gbur-cyan-border); letter-spacing: 0.03em; display: inline-block; }
+        .universities-row { align-items: flex-start; padding-top: 10px; padding-bottom: 10px; }
+        .universities-row .detail-label { padding-top: 2px; }
+        .universities-list { min-width: 0; display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 4px; }
+        .university { display: inline-flex; align-items: center; gap: 5px; padding: 2px 6px; border: 1px solid var(--gbur-cyan-border); border-radius: var(--radius-xs); background: var(--gbur-cyan-light); color: var(--gbur-navy); font-size: 10.5px; font-weight: 600; text-align: left; }
+        .university::before { content: ""; width: 4px; height: 4px; border-radius: 50%; background: var(--gbur-cyan); flex-shrink: 0; }
+        .validity-value { display: inline-flex; justify-content: flex-end; align-items: center; gap: 6px; flex-wrap: wrap; }
+        .validity-status { display: inline-flex; align-items: center; gap: 4px; padding: 2px 6px; background: var(--status-green-bg); border: 1px solid var(--status-green-border); border-radius: var(--radius-xs); color: var(--status-green); font-size: 10.5px; font-weight: 800; }
+        .validity-status.expired { background: var(--status-red-bg); border-color: var(--status-red-border); color: var(--status-red); }
+        .validity-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--status-green); }
+        .validity-status.expired .validity-dot { background: var(--status-red); }
+        .validity-date { color: var(--text-muted); font-size: 11.5px; font-weight: 600; }
+        .verification-footer { padding: 10px 18px; background: #F1F5F9; border-top: 1px solid var(--border-card); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+        .verified-by { display: flex; align-items: center; gap: 6px; color: var(--gbur-navy); font-size: 10.5px; font-weight: 800; }
+        .verified-by-icon { width: 16px; height: 16px; border-radius: var(--radius-xs); background: var(--gbur-navy); color: var(--white); display: flex; align-items: center; justify-content: center; }
+        .website { color: var(--text-muted); font-size: 10.5px; font-weight: 700; }
+
+        @media (max-width: 850px) {
+            .workspace { grid-template-columns: 1fr; }
+            .preview-sidebar { position: static; order: -1; margin-bottom: 12px; }
+            .form-grid { grid-template-columns: 1fr; }
+            .form-group.full, .btn-submit { grid-column: span 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header class="brand-header">
+            <div class="brand-logo-wrapper">
+                <img src="gbur_logo.png" alt="GBUR Logo" class="brand-logo" onerror="this.style.display='none'">
+            </div>
+            <h1 class="brand-name">Groupe Biblique Universitaire du Rwanda</h1>
+            <p class="brand-subtitle">Staff Card Registration & Live Preview</p>
+        </header>
+
+        <main class="workspace">
+            <section class="form-card">
+                <div class="section-title">New Staff Card Registration</div>
+                <form id="staff-form" onsubmit="handleFormSubmit(event)">
+                    <div class="form-grid">
+                        <div class="form-group full">
+                            <label for="input-id">Staff Card ID (Auto-Generated by DB)</label>
+                            <input type="text" id="input-id" readonly value="Auto-Generated on Save">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-firstname">First Name *</label>
+                            <input type="text" id="input-firstname" required placeholder="Aime" oninput="updatePreview()">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-lastname">Last Name *</label>
+                            <input type="text" id="input-lastname" required placeholder="IRADUKUNDA" oninput="updatePreview()">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-position">Position</label>
+                            <input type="text" id="input-position" placeholder="Campus Staff" oninput="updatePreview()">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="input-department">Department</label>
+                            <select id="input-department" onchange="updatePreview()">
+                                <option value="Students Ministry">Students Ministry</option>
+                                <option value="General Secretariat Office">General Secretariat Office</option>
+                                <option value="Graduates Ministry">Graduates Ministry</option>
+                                <option value="General Secretariat Office & Graduates Ministry">General Secretariat Office & Graduates Ministry</option>
+                                <option value="Finance">Finance</option>
+                                <option value="Information and Technology">Information and Technology</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group full">
+                            <label for="input-workfield">Work Field / Region</label>
+                            <select id="input-workfield" onchange="updatePreview()">
+                                <option value="GBUR Head Office">GBUR Head Office</option>
+                                <option value="Kigali Region">Kigali Region</option>
+                                <option value="Southern Region">Southern Region</option>
+                                <option value="Northern Region">Northern Region</option>
+                                <option value="Eastern Region">Eastern Region</option>
+                                <option value="Western Region">Western Region</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group full">
+                            <label>Universities in Charge</label>
+                            <div class="university-tag-container" id="tag-container" onclick="focusTagInput()">
+                                <input type="text" class="tag-input" id="tag-input" placeholder="Type uni name & press Enter..." onkeydown="handleTagKeydown(event)">
+                            </div>
+                            
+                            <div class="quick-presets">
+                                <span class="preset-title">Quick Add Rwandan Universities:</span>
+                                <div class="preset-buttons">
+                                    <button type="button" class="preset-btn" onclick="addPresetTag('University of Rwanda (UR)')">+ UR</button>
+                                    <button type="button" class="preset-btn" onclick="addPresetTag('University of Kigali (UoK)')">+ UoK</button>
+                                    <button type="button" class="preset-btn" onclick="addPresetTag('Adventist University of Central Africa (AUCA)')">+ AUCA</button>
+                                    <button type="button" class="preset-btn" onclick="addPresetTag('INES Ruhengeri')">+ INES</button>
+                                    <button type="button" class="preset-btn" onclick="addPresetTag('ULK')">+ ULK</button>
+                                    <button type="button" class="preset-btn" onclick="addPresetTag('UTB')">+ UTB</button>
+                                    <button type="button" class="preset-btn" onclick="addPresetTag('IPRC Kigali')">+ IPRC Kigali</button>
+                                    <button type="button" class="preset-btn" onclick="addPresetTag('IPRC Huye')">+ IPRC Huye</button>
+                                    <button type="button" class="preset-btn" onclick="addPresetTag('IPRC Musanze')">+ IPRC Musanze</button>
+                                    <button type="button" class="preset-btn" onclick="addPresetTag('CUR - Taba')">+ CUR - Taba</button>
+                                    <button type="button" class="preset-btn" onclick="addPresetTag('CUR - Save')">+ CUR - Save</button>
+                                    <button type="button" class="preset-btn" onclick="addPresetTag('Mount Kigali University (MKU)')">+ MKU</button>
+                                    <button type="button" class="preset-btn" onclick="addPresetTag('UNILAK')">+ UNILAK</button>
+                                    <button type="button" class="preset-btn" onclick="addPresetTag('University of Lay Adventists of Kigali')">+ Lay Adventists</button>
+                                    <button type="button" class="preset-btn" onclick="addPresetTag('PIASS')">+ PIASS</button>
+                                    <button type="button" class="preset-btn" onclick="addPresetTag('East African University Rwanda (EAUR)')">+ EAUR</button>
+                                    <button type="button" class="preset-btn" onclick="addPresetTag('Carnegie Mellon University Africa (CMU-Africa)')">+ CMU Africa</button>
+                                    <button type="button" class="preset-btn" onclick="addPresetTag('African Leadership University (ALU)')">+ ALU</button>
+                                    <button type="button" class="preset-btn" onclick="addPresetTag('UGHE')">+ UGHE</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group full">
+                            <label for="input-validity">Card Expiration Date *</label>
+                            <input type="date" id="input-validity" required onchange="updatePreview()">
+                        </div>
+
+                        <button type="submit" class="btn-submit" id="btn-save">Register Staff Card</button>
+                    </div>
+                </form>
+            </section>
+
+            <aside class="preview-sidebar">
+                <div class="preview-badge-label">Live Card Preview</div>
+
+                <section class="verification-card">
+                    <header class="verification-header">
+                        <div class="badge-wrapper">
+                            <svg class="verified-badge-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M24 3.5L28.8 6.8L34.5 5.5L37.1 10.7L42.8 12.1L42.5 18L46.8 21.9L44.2 27.1L46.8 32.3L42.5 36.2L42.8 42.1L37.1 43.5L34.5 48.7L28.8 47.4L24 50.7L19.2 47.4L13.5 48.7L10.9 43.5L5.2 42.1L5.5 36.2L1.2 32.3L3.8 27.1L1.2 21.9L5.5 18L5.2 12.1L10.9 10.7L13.5 5.5L19.2 6.8L24 3.5Z" fill="#5DAAE0"/>
+                                <path d="M24 6L28.2 8.9L33.2 7.8L35.5 12.3L40.5 13.5L40.2 18.7L44 22.1L41.7 26.7L44 31.3L40.2 34.7L40.5 39.9L35.5 41.1L33.2 45.6L28.2 44.5L24 47.4L19.8 44.5L14.8 45.6L12.5 41.1L7.5 39.9L7.8 34.7L4 31.3L6.3 26.7L4 22.1L7.8 18.7L7.5 13.5L12.5 12.3L14.8 7.8L19.8 8.9L24 6Z" fill="#0D3F85"/>
+                                <path d="M16 24.5L21.5 30L32 18.5" stroke="#FFFFFF" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h2 class="verification-title" id="prev-card-title">Staff Card Verified</h2>
+                        <p class="verification-description" id="prev-card-desc">This ministry identification card is registered and currently valid with GBUR.</p>
+                    </header>
+                    <div class="cyan-line"></div>
+                    <div class="staff-profile">
+                        <div class="profile-avatar" id="prev-avatar">--</div>
+                        <div class="profile-info">
+                            <h3 class="staff-name" id="prev-name">First Last</h3>
+                            <div class="staff-position" id="prev-position">Position</div>
+                        </div>
+                    </div>
+                    <div class="staff-details">
+                        <div class="detail-row">
+                            <div class="detail-label">Staff ID</div>
+                            <div class="detail-value staff-id" id="prev-id">AUTO-GENERATED</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Department</div>
+                            <div class="detail-value" id="prev-department">Department</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Work Field</div>
+                            <div class="detail-value" id="prev-workfield">Work Field</div>
+                        </div>
+                        <div class="detail-row universities-row">
+                            <div class="detail-label">Universities in Charge</div>
+                            <div class="universities-list" id="prev-universities">
+                                <span class="university">None</span>
+                            </div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Validity</div>
+                            <div class="detail-value validity-value">
+                                <span class="validity-status" id="prev-validity-status">
+                                    <span class="validity-dot"></span>
+                                    <span id="prev-validity-label">Valid Until</span>
+                                </span>
+                                <span class="validity-date" id="prev-validity-date">31 Dec 2027</span>
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="verification-footer">
+                        <div class="verified-by">
+                            <span class="verified-by-icon">
+                                <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20 6 9 17l-5-5"></path>
+                                </svg>
+                            </span>
+                            Verified by GBUR
+                        </div>
+                        <span class="website">www.gburwanda.com</span>
+                    </footer>
+                </section>
+            </aside>
+        </main>
+    </div>
+
+    <script>
+        let universities = [];
+
+        const form = document.getElementById('staff-form');
+        const inputFirstName = document.getElementById('input-firstname');
+        const inputLastName = document.getElementById('input-lastname');
+        const inputPosition = document.getElementById('input-position');
+        const inputDepartment = document.getElementById('input-department');
+        const inputWorkField = document.getElementById('input-workfield');
+        const inputValidity = document.getElementById('input-validity');
+        const tagContainer = document.getElementById('tag-container');
+        const tagInput = document.getElementById('tag-input');
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const defaultDate = new Date();
+            defaultDate.setFullYear(defaultDate.getFullYear() + 1);
+            defaultDate.setMonth(11);
+            defaultDate.setDate(31);
+            inputValidity.value = defaultDate.toISOString().split('T')[0];
+
+            updatePreview();
+        });
+
+        function handleTagKeydown(e) {
+            if (e.key === 'Enter' || e.key === ',') {
+                e.preventDefault();
+                const val = tagInput.value.trim();
+                if (val) {
+                    addUniversityTag(val);
+                    tagInput.value = '';
+                }
+            }
+        }
+
+        function addPresetTag(name) {
+            addUniversityTag(name);
+        }
+
+        function addUniversityTag(name) {
+            if (!universities.includes(name)) {
+                universities.push(name);
+                renderTags();
+                updatePreview();
+            }
+        }
+
+        function removeUniversityTag(index) {
+            universities.splice(index, 1);
+            renderTags();
+            updatePreview();
+        }
+
+        function focusTagInput() {
+            tagInput.focus();
+        }
+
+        function renderTags() {
+            const chips = tagContainer.querySelectorAll('.tag-chip');
+            chips.forEach(c => c.remove());
+
+            universities.forEach((uni, idx) => {
+                const chip = document.createElement('span');
+                chip.className = 'tag-chip';
+                chip.innerHTML = `${uni} <span class="tag-chip-remove" onclick="removeUniversityTag(${idx})">&times;</span>`;
+                tagContainer.insertBefore(chip, tagInput);
+            });
+        }
+
+        function updatePreview() {
+            const fName = inputFirstName.value.trim() || 'Aime';
+            const lName = inputLastName.value.trim() || 'IRADUKUNDA';
+            const pos = inputPosition.value.trim() || 'Campus Staff';
+            const dept = inputDepartment ? inputDepartment.value : 'Students Ministry';
+            const field = inputWorkField ? inputWorkField.value : 'GBUR Head Office';
+            const valDate = inputValidity.value;
+
+            const initF = fName ? fName.charAt(0).toUpperCase() : '';
+            const initL = lName ? lName.charAt(0).toUpperCase() : '';
+            document.getElementById('prev-avatar').textContent = `${initF}${initL}` || '--';
+
+            document.getElementById('prev-name').textContent = `${fName} ${lName}`;
+            document.getElementById('prev-position').textContent = pos;
+            document.getElementById('prev-department').textContent = dept;
+            document.getElementById('prev-workfield').textContent = field;
+
+            const uniListEl = document.getElementById('prev-universities');
+            uniListEl.innerHTML = '';
+            if (universities.length > 0) {
+                universities.forEach(u => {
+                    const span = document.createElement('span');
+                    span.className = 'university';
+                    span.textContent = u;
+                    uniListEl.appendChild(span);
+                });
+            } else {
+                uniListEl.innerHTML = '<span class="university">None assigned</span>';
+            }
+
+            const statusBadge = document.getElementById('prev-validity-status');
+            const statusLabel = document.getElementById('prev-validity-label');
+            const dateLabel = document.getElementById('prev-validity-date');
+            const cardTitle = document.getElementById('prev-card-title');
+            const cardDesc = document.getElementById('prev-card-desc');
+
+            if (valDate) {
+                const d = new Date(valDate);
+                const today = new Date();
+                dateLabel.textContent = d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+
+                if (d < today) {
+                    statusBadge.classList.add('expired');
+                    statusLabel.textContent = 'Expired On';
+                    cardTitle.textContent = 'Staff Card Expired';
+                    cardDesc.textContent = 'This card is registered with GBUR but has exceeded its expiration date.';
+                } else {
+                    statusBadge.classList.remove('expired');
+                    statusLabel.textContent = 'Valid Until';
+                    cardTitle.textContent = 'Staff Card Verified';
+                    cardDesc.textContent = 'This ministry identification card is registered and currently valid with GBUR.';
+                }
+            } else {
+                dateLabel.textContent = 'N/A';
+            }
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+
+            const payload = {
+                first_name: inputFirstName.value.trim(),
+                last_name: inputLastName.value.trim(),
+                position: inputPosition.value.trim() || 'Campus Staff',
+                department: inputDepartment.value,
+                work_field: inputWorkField.value,
+                universities_in_charge: universities,
+                validity: inputValidity.value
+            };
+
+            console.log('Submitting Form Payload to Database:', payload);
+            alert('Form submitted successfully! Your backend database will auto-generate the Staff Card ID.');
+        }
+    </script>
+</body>
+</html>

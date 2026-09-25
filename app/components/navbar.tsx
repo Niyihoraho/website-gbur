@@ -5,9 +5,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import SubscribeModal from './SubscribeModal'
+import { useAuth } from '../contexts/AuthContext'
 
 const Navbar = () => {
   const pathname = usePathname()
+  const { isAdmin } = useAuth()
   const [isSubscribeModalOpen, setIsSubscribeModalOpen] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
@@ -90,6 +92,26 @@ const Navbar = () => {
               >
                 CONTACT US
               </Link>
+
+              <div className="border-r-[1.5px] border-custom h-7"></div>
+
+              <Link
+                href="/verify"
+                className={`link-color hover:text-muted text-xs font-semibold transition-colors pb-1 whitespace-nowrap ${pathname.startsWith('/verify') ? 'border-b-2 border-action text-action' : 'border-b-2 border-transparent hover:border-link-hover'
+                  }`}
+              >
+                VERIFY CARD
+              </Link>
+
+              {isAdmin && (
+                <Link
+                  href="/staff-cards"
+                  className={`link-color hover:text-muted text-xs font-semibold transition-colors pb-1 whitespace-nowrap ${pathname === '/staff-cards' || pathname === '/staff-card-registration' ? 'border-b-2 border-action text-action' : 'border-b-2 border-transparent hover:border-link-hover'
+                    }`}
+                >
+                  STAFF CARDS
+                </Link>
+              )}
             </div>
           </div>
         </div>
@@ -162,6 +184,15 @@ const Navbar = () => {
                 >
                   GRADUATE
                 </Link>
+                {isAdmin && (
+                  <Link
+                    href="/staff-cards"
+                    className={`text-primary link-color font-bold text-sm tracking-wide transition-colors pb-1 ${pathname === '/staff-cards' || pathname === '/staff-card-registration' ? 'border-b-2 border-action text-action' : 'border-b-2 border-transparent hover:border-link-hover'
+                      }`}
+                  >
+                    STAFF CARDS
+                  </Link>
+                )}
               </div>
             </div>
 
@@ -266,6 +297,14 @@ const Navbar = () => {
               >
                 CONTACT US
               </Link>
+              <Link
+                href="/verify"
+                onClick={closeMobileMenu}
+                className={`block link-color hover:text-muted text-sm font-semibold transition-colors py-2 ${pathname.startsWith('/verify') ? 'text-action border-l-4 border-action pl-3' : 'pl-3'
+                  }`}
+              >
+                VERIFY STAFF CARD
+              </Link>
             </div>
 
             {/* Mobile Main Nav Links */}
@@ -310,6 +349,16 @@ const Navbar = () => {
               >
                 GRADUATE
               </Link>
+              {isAdmin && (
+                <Link
+                  href="/staff-cards"
+                  onClick={closeMobileMenu}
+                  className={`block text-primary link-color font-bold text-base transition-colors py-2 ${pathname === '/staff-cards' || pathname === '/staff-card-registration' ? 'text-action border-l-4 border-action pl-3' : 'pl-3'
+                    }`}
+                >
+                  STAFF CARDS & DIRECTORY
+                </Link>
+              )}
             </div>
 
             {/* Mobile Actions */}

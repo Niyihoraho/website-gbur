@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#082C5E">
+    <title>GBUR Staff Card Verification</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gbur-navy: #082C5E;
+            --gbur-navy-dark: #051D40;
+            --gbur-navy-light: #0D3F85;
+            --gbur-cyan: #5DAAE0;
+            --gbur-cyan-light: #EBF5FC;
+            --gbur-cyan-border: #B3D8F2;
+            --bg-page: #F8FAFC;
+            --white: #FFFFFF;
+            --text-main: #0F172A;
+            --text-muted: #475569;
+            --border-card: #E2E8F0;
+            --border-divider: #F1F5F9;
+            --status-green: #15803D;
+            --status-green-bg: #F0FDF4;
+            --status-green-border: #DCFCE7;
+            --radius-xs: 4px;
+            --radius-sm: 6px;
+            --radius-md: 8px;
+            --radius-lg: 10px;
+            --shadow-card: 0 20px 35px -10px rgba(8, 44, 94, 0.09), 0 4px 12px -2px rgba(8, 44, 94, 0.04);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { min-height: 100%; font-size: 16px; -webkit-text-size-adjust: 100%; }
+        body {
+            min-height: 100vh;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: var(--text-main);
+            background-color: var(--bg-page);
+            background-image: radial-gradient(circle at 50% 0%, rgba(93, 170, 224, 0.12) 0%, transparent 65%), linear-gradient(to bottom, #F8FAFC 0%, #EFF4F9 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: clamp(12px, 3vw, 36px) clamp(12px, 4vw, 24px);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+        .verification-page { width: min(92vw, 480px); margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
+        .brand { text-align: center; margin-bottom: clamp(16px, 3.5vw, 24px); width: 100%; }
+        .brand-logo-wrapper { display: flex; justify-content: center; align-items: center; margin-bottom: 2px; }
+        .brand-logo { width: clamp(74px, 17vw, 94px); height: clamp(74px, 17vw, 94px); object-fit: contain; display: block; filter: drop-shadow(0 4px 8px rgba(8, 44, 94, 0.08)); }
+        .brand-name { color: var(--gbur-navy); font-size: clamp(11.5px, 2.8vw, 13px); font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; line-height: 1.35; padding: 0 8px; }
+        .brand-subtitle { margin-top: 4px; color: var(--text-muted); font-size: clamp(10.5px, 2.4vw, 11.5px); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+        .verification-card { width: 100%; background: var(--white); border: 1px solid var(--border-card); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-card); transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .verification-header { padding: clamp(18px, 4.5vw, 24px) clamp(16px, 4.5vw, 24px); color: var(--white); background: linear-gradient(135deg, var(--gbur-navy-dark) 0%, var(--gbur-navy) 60%, var(--gbur-navy-light) 100%); text-align: center; position: relative; overflow: hidden; }
+        .verification-header::after { content: ""; position: absolute; top: -50%; right: -25%; width: 220px; height: 220px; background: radial-gradient(circle, rgba(93, 170, 224, 0.18) 0%, transparent 70%); pointer-events: none; }
+        .badge-wrapper { display: flex; justify-content: center; align-items: center; margin-bottom: 10px; }
+        .verified-badge-icon { width: clamp(44px, 10vw, 52px); height: clamp(44px, 10vw, 52px); filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.18)); }
+        .verification-title { font-size: clamp(16.5px, 4.2vw, 19.5px); line-height: 1.25; font-weight: 800; letter-spacing: -0.01em; }
+        .verification-description { max-width: 340px; margin: 6px auto 0; color: rgba(255, 255, 255, 0.88); font-size: clamp(11px, 2.6vw, 12.5px); line-height: 1.5; }
+        .cyan-line { height: 3px; background: linear-gradient(90deg, var(--gbur-navy) 0%, var(--gbur-cyan) 50%, var(--gbur-navy) 100%); width: 100%; }
+        .staff-profile { padding: clamp(14px, 3.5vw, 18px) clamp(16px, 4.5vw, 22px); background: var(--gbur-cyan-light); border-bottom: 1px solid var(--gbur-cyan-border); display: flex; align-items: center; gap: clamp(12px, 3vw, 16px); }
+        .profile-avatar { width: clamp(44px, 10vw, 52px); height: clamp(44px, 10vw, 52px); border-radius: var(--radius-md); background: var(--gbur-navy); color: var(--white); display: flex; align-items: center; justify-content: center; font-size: clamp(15px, 3.5vw, 18px); font-weight: 800; border: 2px solid var(--gbur-cyan); box-shadow: 0 3px 8px rgba(8, 44, 94, 0.15); flex-shrink: 0; }
+        .profile-info { flex: 1; min-width: 0; }
+        .staff-name { color: var(--gbur-navy); font-size: clamp(16px, 4vw, 20px); line-height: 1.25; font-weight: 800; letter-spacing: -0.01em; word-break: break-word; }
+        .staff-position { margin-top: 4px; display: inline-flex; align-items: center; gap: 5px; padding: 2px 8px; background: var(--white); color: var(--gbur-navy); border: 1px solid var(--gbur-cyan-border); border-radius: var(--radius-xs); font-size: clamp(10.5px, 2.5vw, 12px); font-weight: 700; }
+        .staff-details { padding: 6px clamp(16px, 4.5vw, 22px) clamp(12px, 3vw, 18px); }
+        .detail-row { display: flex; align-items: center; justify-content: space-between; min-height: 44px; padding: 10px 0; border-bottom: 1px solid var(--border-divider); gap: 12px; }
+        .detail-row:last-child { border-bottom: none; }
+        .detail-label { color: var(--text-muted); font-size: clamp(10px, 2.4vw, 11px); font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; flex-shrink: 0; max-width: 45%; }
+        .detail-value { min-width: 0; color: var(--text-main); font-size: clamp(12px, 2.8vw, 13.5px); font-weight: 600; line-height: 1.4; text-align: right; overflow-wrap: anywhere; }
+        .staff-id { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; color: var(--gbur-navy); font-weight: 800; background: var(--gbur-cyan-light); padding: 3px 8px; border-radius: var(--radius-xs); border: 1px solid var(--gbur-cyan-border); letter-spacing: 0.03em; display: inline-block; }
+        .universities-row { align-items: flex-start; padding-top: 12px; padding-bottom: 12px; }
+        .universities-row .detail-label { padding-top: 2px; }
+        .universities-list { min-width: 0; display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 5px; }
+        .university { display: inline-flex; align-items: center; gap: 5px; padding: 3px 8px; border: 1px solid var(--gbur-cyan-border); border-radius: var(--radius-xs); background: var(--gbur-cyan-light); color: var(--gbur-navy); font-size: clamp(10px, 2.4vw, 11.5px); font-weight: 600; line-height: 1.35; text-align: left; }
+        .university::before { content: ""; width: 5px; height: 5px; min-width: 5px; border-radius: 50%; background: var(--gbur-cyan); flex-shrink: 0; }
+        .validity-value { display: inline-flex; justify-content: flex-end; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .validity-status { display: inline-flex; align-items: center; gap: 5px; padding: 2px 7px; background: var(--status-green-bg); border: 1px solid var(--status-green-border); border-radius: var(--radius-xs); color: var(--status-green); font-size: clamp(10.5px, 2.4vw, 11.5px); font-weight: 800; }
+        .validity-dot { width: 6px; height: 6px; min-width: 6px; border-radius: 50%; background: var(--status-green); box-shadow: 0 0 0 2px rgba(21, 128, 61, 0.15); }
+        .validity-date { color: var(--text-muted); font-size: clamp(11.5px, 2.6vw, 12.5px); font-weight: 600; }
+        .verification-footer { padding: clamp(12px, 3vw, 15px) clamp(16px, 4.5vw, 22px); background: #F1F5F9; border-top: 1px solid var(--border-card); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+        .verified-by { display: flex; align-items: center; gap: 6px; color: var(--gbur-navy); font-size: clamp(10.5px, 2.5vw, 11.5px); font-weight: 800; letter-spacing: 0.01em; }
+        .verified-by-icon { width: 18px; height: 18px; border-radius: var(--radius-xs); background: var(--gbur-navy); color: var(--white); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .website { color: var(--text-muted); font-size: clamp(10.5px, 2.3vw, 11.5px); font-weight: 700; letter-spacing: 0.01em; }
+        @media (max-width: 350px) {
+            body { padding: 10px 8px; }
+            .detail-row { flex-direction: column; align-items: flex-start; gap: 4px; }
+            .detail-label { max-width: 100%; }
+            .detail-value { text-align: left; width: 100%; }
+            .universities-list, .validity-value { justify-content: flex-start; }
+        }
+        @media (min-width: 1024px) {
+            .verification-card:hover { box-shadow: 0 25px 45px -12px rgba(8, 44, 94, 0.12), 0 6px 16px -2px rgba(8, 44, 94, 0.06); }
+        }
+    </style>
+</head>
+<body>
+    <main class="verification-page">
+        <header class="brand">
+            <div class="brand-logo-wrapper">
+                <img src="gbur_logo.png" alt="GBUR Logo" class="brand-logo" onerror="this.style.display='none'">
+            </div>
+            <h1 class="brand-name">Groupe Biblique Universitaire du Rwanda</h1>
+            <p class="brand-subtitle">Staff Card Verification</p>
+        </header>
+        <section class="verification-card">
+            <header class="verification-header">
+                <div class="badge-wrapper">
+                    <svg class="verified-badge-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M24 3.5L28.8 6.8L34.5 5.5L37.1 10.7L42.8 12.1L42.5 18L46.8 21.9L44.2 27.1L46.8 32.3L42.5 36.2L42.8 42.1L37.1 43.5L34.5 48.7L28.8 47.4L24 50.7L19.2 47.4L13.5 48.7L10.9 43.5L5.2 42.1L5.5 36.2L1.2 32.3L3.8 27.1L1.2 21.9L5.5 18L5.2 12.1L10.9 10.7L13.5 5.5L19.2 6.8L24 3.5Z" fill="#5DAAE0"/>
+                        <path d="M24 6L28.2 8.9L33.2 7.8L35.5 12.3L40.5 13.5L40.2 18.7L44 22.1L41.7 26.7L44 31.3L40.2 34.7L40.5 39.9L35.5 41.1L33.2 45.6L28.2 44.5L24 47.4L19.8 44.5L14.8 45.6L12.5 41.1L7.5 39.9L7.8 34.7L4 31.3L6.3 26.7L4 22.1L7.8 18.7L7.5 13.5L12.5 12.3L14.8 7.8L19.8 8.9L24 6Z" fill="#0D3F85"/>
+                        <path d="M16 24.5L21.5 30L32 18.5" stroke="#FFFFFF" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h2 class="verification-title">Staff Card Verified</h2>
+                <p class="verification-description">This ministry identification card is registered and currently valid with GBUR.</p>
+            </header>
+            <div class="cyan-line"></div>
+            <div class="staff-profile">
+                <div class="profile-avatar" aria-hidden="true">JR</div>
+                <div class="profile-info">
+                    <h3 class="staff-name">Aime IRADUKUNDA</h3>
+                    <div class="staff-position">Campus Staff</div>
+                </div>
+            </div>
+            <div class="staff-details">
+                <div class="detail-row">
+                    <div class="detail-label">Staff ID</div>
+                    <div class="detail-value staff-id">GBUR-2026-001</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Department</div>
+                    <div class="detail-value">Students Ministry</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Work Field</div>
+                    <div class="detail-value">Campus</div>
+                </div>
+                <div class="detail-row universities-row">
+                    <div class="detail-label">Universities in Charge</div>
+                    <div class="universities-list">
+                        <span class="university">University of Rwanda</span>
+                        <span class="university">University of Kigali</span>
+                        <span class="university">Adventist University of Central Africa</span>
+                        <span class="university">INES Ruhengeri</span>
+                    </div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Validity</div>
+                    <div class="detail-value validity-value">
+                        <span class="validity-status">
+                            <span class="validity-dot"></span>
+                            Valid Until
+                        </span>
+                        <span class="validity-date">31 Dec 2027</span>
+                    </div>
+                </div>
+            </div>
+            <footer class="verification-footer">
+                <div class="verified-by">
+                    <span class="verified-by-icon">
+                        <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 6 9 17l-5-5"></path>
+                        </svg>
+                    </span>
+                    Verified by GBUR
+                </div>
+                <span class="website">www.gburwanda.com</span>
+            </footer>
+        </section>
+    </main>
+</body>
+</html>
