@@ -103,7 +103,7 @@ export async function getAllStaffCards(): Promise<StaffCard[]> {
     }))
   } catch (error) {
     console.error('Error in getAllStaffCards:', error)
-    throw error
+    return []
   }
 }
 
@@ -141,7 +141,7 @@ export async function getStaffCardById(id: string): Promise<StaffCard | null> {
     }
   } catch (error) {
     console.error(`Error in getStaffCardById for ${id}:`, error)
-    throw error
+    return null
   }
 }
 

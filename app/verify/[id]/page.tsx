@@ -5,6 +5,8 @@ import Footer from '@/app/components/footer'
 import { getStaffCardById, getVerificationUrl } from '@/app/lib/staffCards'
 import VerificationCardClient from './VerificationCardClient'
 
+export const dynamic = 'force-dynamic'
+
 interface PageProps {
   params: Promise<{ id: string }>
 }
