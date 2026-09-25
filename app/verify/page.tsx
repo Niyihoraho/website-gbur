@@ -103,7 +103,7 @@ export default function VerifyPortalPage() {
                 <p className="mt-2 text-xs font-semibold text-red-600 text-left pl-3">{errorMsg}</p>
               )}
               <div className="mt-3 flex items-center justify-center gap-2 text-xs text-slate-500">
-                <span>Sample ID:</span>
+                <span>ID:</span>
                 <button
                   type="button"
                   onClick={() => setSearchId('GBUR-2026-001')}
