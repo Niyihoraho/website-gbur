@@ -4,6 +4,7 @@ import Iam from "./components/iam";
 import AboutUs from "./components/aboutUs";
 import Involved from "./components/involved";
 import FromtheBlog from "./components/FromtheBlog";
+import BoardMembers from "./components/BoardMembers";
 import Footer from "./components/footer";
 import FloatingActionButton from "./components/FloatingActionButton";
 
@@ -16,6 +17,7 @@ export default function Home() {
       <AboutUs />
       <Involved />
       <FromtheBlog />
+      <BoardMembers />
       <FloatingActionButton />
       <Footer />
     </>

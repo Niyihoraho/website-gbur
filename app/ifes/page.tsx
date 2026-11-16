@@ -41,12 +41,12 @@ const IfesHistoryPage = () => {
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-action mb-6">
               Cambridge University, England - The Global Roots
             </h2>
-            
+
             <div className="space-y-4 text-base md:text-lg text-secondary leading-relaxed">
               <p>
                 The roots of the GBUR movement reach back to 1877 at Cambridge University, where a small group of students met regularly for Bible study and prayer. Despite the university's disapproval, these students were determined to share their faith with fellow students. In 1919, the British Inter-Varsity Fellowship (BIVF) was formed, with "inter" meaning "between" and "varsity" referring to university life. The name symbolized the vision of linking Christian students across different universities.
               </p>
-              
+
               <p>
                 From its earliest days, the movement had a global vision. Students at Cambridge were passionate about spreading the gospel worldwide, and this commitment to missions became a defining characteristic of what would become the International Fellowship of Evangelical Students (IFES).
               </p>
@@ -60,12 +60,12 @@ const IfesHistoryPage = () => {
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-action mb-6">
               The Birth of IFES
             </h2>
-            
+
             <div className="space-y-4 text-base md:text-lg text-secondary leading-relaxed">
               <p>
                 In 1947, a historic gathering took place at Harvard University in Boston, United States. Representatives from ten countries—Australia, the United Kingdom, Canada, China, Netherlands, Norway, France, New Zealand, Switzerland, and the United States—came together with a shared dream: to see a clear witness to the Lord Jesus established in every university in the world.
               </p>
-              
+
               <p>
                 From this 1947 meeting emerged the International Fellowship of Evangelical Students (IFES), which now unites student movements in over 180 countries. IFES provides a network of mutual support, shared resources, and a common commitment to reaching students with the gospel. The headquarters is located in Oxford, England.
               </p>
@@ -79,12 +79,12 @@ const IfesHistoryPage = () => {
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-action mb-6">
               IFES Leadership Through the Years
             </h2>
-            
+
             <div className="space-y-4 text-base md:text-lg text-secondary leading-relaxed">
               <p>
                 Representatives of all member movements gather once every four years at the "World Assembly," where the General Committee conducts official business of the fellowship. IFES's General Secretaries have included:
               </p>
-              
+
               <ul className="list-disc list-inside space-y-2 ml-4">
                 <li>Stacey Woods (1947–1972)</li>
                 <li>Chua Wee Hian (1972–1991)</li>
@@ -103,20 +103,20 @@ const IfesHistoryPage = () => {
             <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-action mb-6">
               IFES Global Regions
             </h2>
-            
+
             <div className="space-y-4 text-base md:text-lg text-secondary leading-relaxed">
               <p>
                 Today, IFES operates through regional networks spanning:
               </p>
-              
+
               <ul className="list-disc list-inside space-y-2 ml-4">
                 <li>North America</li>
                 <li>Caribbean</li>
                 <li>Latin America</li>
                 <li>Europe</li>
                 <li>Middle East and North Africa</li>
-                <li>Francophone Africa (including GBUR)</li>
-                <li>EPSA (English-speaking Africa)</li>
+                <li>Francophone Africa</li>
+                <li>EPSA(including GBUR)</li>
                 <li>Eurasia</li>
                 <li>South Asia</li>
                 <li>East Asia</li>
@@ -216,12 +216,12 @@ const IfesHistoryPage = () => {
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-orange-600 mb-6">
               Ministry Today
             </h2>
-            
+
             <div className="space-y-4 text-base md:text-lg text-secondary leading-relaxed">
               <p>
                 GBUR's strategic priorities focus on:
               </p>
-              
+
               <ul className="list-disc list-inside space-y-2 ml-4">
                 <li><strong>Thriving in Witness</strong> - Equipping students for effective evangelism on their campuses</li>
                 <li><strong>Thriving in Whole-life Commitment</strong> - Developing disciples and leaders who integrate faith with every area of life</li>
@@ -229,11 +229,11 @@ const IfesHistoryPage = () => {
                 <li><strong>Thriving into the Future</strong> - Building sustainable structures with good governance and accountability</li>
                 <li><strong>Involvement in Missions</strong> - Mobilizing students for cross-cultural gospel witness</li>
               </ul>
-              
+
               <p>
                 GBUR continues to be made up of two wings working together: students actively ministering on campuses, and graduates who support the work through prayer, financial partnership, mentoring, and staff service. This intergenerational partnership ensures that the gospel movement continues to thrive in Rwanda's student world.
               </p>
-              
+
               <p>
                 Through partnership with IFES, GBUR remains connected to a global movement of students and graduates committed to seeing every campus transformed by the gospel, for the glory of Christ.
               </p>
